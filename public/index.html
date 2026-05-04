@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxStay - Premium Shortlet Apartments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <h2 class="logo-text">LuxStay</h2>
+            </div>
+            <div class="preloader-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <p class="preloader-text">Loading luxury experiences...</p>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-text">LuxStay</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#apartments" class="nav-link">Apartments</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <button class="book-now-btn" id="bookNowBtn">Book Now</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-background">
+            <div class="floating-particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Experience Luxury Living</h1>
+                <p class="hero-subtitle">
+                    Premium shortlet apartments designed for the discerning traveler. 
+                    Where comfort meets elegance in the heart of the city.
+                </p>
+                <div class="hero-buttons">
+                    <button class="primary-btn" id="exploreBtn">
+                        <span class="btn-text">Explore Apartments</span>
+                        <span class="btn-hover-effect"></span>
+                    </button>
+                    <button class="secondary-btn" id="galleryBtn">
+                        <span class="btn-text">Book Now</span>
+                        <span class="btn-hover-effect"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Find Available Apartments Section -->
+    <section class="booking-search-section" id="apartments">
+        <div class="booking-section-header">
+            <h2 class="booking-section-title">Find Available <span class="gold-text">Apartments</span></h2>
+            <p class="booking-section-description">Discover your perfect luxury accommodation with our advanced search filters. Select your preferred location, dates, and guest requirements to find the ideal apartment for your stay.</p>
+        </div>
+        <div class="booking-search-container">
+            <div class="booking-search-bar" id="bookingSearchBar">
+                <div class="search-field" id="locationField">
+                    <div class="field-icon">
+                        <i data-lucide="map-pin"></i>
+                    </div>
+                    <div class="field-content">
+                        <label class="field-label">Location</label>
+                        <div class="field-value" id="locationValue">Where are you going?</div>
+                        <input type="text" class="field-input" placeholder="Search locations..." id="locationInput" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="field-divider"></div>
+                
+                <div class="search-field" id="checkinField">
+                    <div class="field-icon">
+                        <i data-lucide="calendar"></i>
+                    </div>
+                    <div class="field-content">
+                        <label class="field-label">Check-In</label>
+                        <div class="field-value" id="checkinValue">Add dates</div>
+                    </div>
+                </div>
+                
+                <div class="field-divider"></div>
+                
+                <div class="search-field" id="checkoutField">
+                    <div class="field-icon">
+                        <i data-lucide="calendar"></i>
+                    </div>
+                    <div class="field-content">
+                        <label class="field-label">Check-Out</label>
+                        <div class="field-value" id="checkoutValue">Add dates</div>
+                    </div>
+                </div>
+                
+                <div class="field-divider"></div>
+                
+                <div class="search-field" id="guestsField">
+                    <div class="field-icon">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <div class="field-content">
+                        <label class="field-label">Guests</label>
+                        <div class="field-value" id="guestsValue">1 guest</div>
+                    </div>
+                </div>
+                
+                <button class="search-button" id="searchButton">
+                    <i data-lucide="search"></i>
+                    <span>Search</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Dropdowns Container - Now part of the section flow -->
+        <div class="dropdowns-container">
+            <!-- Location Dropdown -->
+            <div class="location-dropdown" id="locationDropdown">
+                <div class="location-search">
+                    <input type="text" class="location-search-input" placeholder="Search locations..." id="locationSearchInput">
+                </div>
+                <div class="location-list" id="locationList">
+                    <!-- Popular locations will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Calendar Dropdown -->
+            <div class="calendar-dropdown" id="calendarDropdown">
+                <div class="calendar-info-note">
+                    <i data-lucide="info"></i>
+                    <span>Check-in starts from tomorrow. Minimum 1 night stay.</span>
+                </div>
+                <div class="calendar-header">
+                    <button class="calendar-nav-btn" id="prevMonth">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    <div class="calendar-months">
+                        <div class="calendar-month" id="currentMonth"></div>
+                        <div class="calendar-month" id="nextMonth"></div>
+                    </div>
+                    <button class="calendar-nav-btn" id="nextMonthBtn">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="calendar-grids">
+                    <div class="calendar-grid" id="currentMonthGrid"></div>
+                    <div class="calendar-grid" id="nextMonthGrid"></div>
+                </div>
+                
+                <div class="calendar-footer">
+                    <div class="selected-dates" id="selectedDates">
+                        <span id="checkinDisplay"></span>
+                        <span id="checkoutDisplay"></span>
+                    </div>
+                    <button class="clear-dates-btn" id="clearDatesBtn">Clear dates</button>
+                </div>
+            </div>
+            
+            <!-- Guests Dropdown -->
+            <div class="guests-dropdown" id="guestsDropdown">
+                <div class="guests-header">
+                    <h3 class="guests-title">Guests</h3>
+                    <button class="guests-close-btn" id="guestsCloseBtn">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                
+                <div class="guests-option">
+                    <div class="guests-info">
+                        <div class="guests-title">Adults</div>
+                        <div class="guests-subtitle">Ages 13 or above</div>
+                    </div>
+                    <div class="guests-controls">
+                        <button class="guests-btn" id="adultsDecrease">-</button>
+                        <span class="guests-count" id="adultsCount">1</span>
+                        <button class="guests-btn" id="adultsIncrease">+</button>
+                    </div>
+                </div>
+                
+                <div class="guests-option">
+                    <div class="guests-info">
+                        <div class="guests-title">Children</div>
+                        <div class="guests-subtitle">Ages 2-12</div>
+                    </div>
+                    <div class="guests-controls">
+                        <button class="guests-btn" id="childrenDecrease">-</button>
+                        <span class="guests-count" id="childrenCount">0</span>
+                        <button class="guests-btn" id="childrenIncrease">+</button>
+                    </div>
+                </div>
+                
+                <div class="guests-option">
+                    <div class="guests-info">
+                        <div class="guests-title">Infants</div>
+                        <div class="guests-subtitle">Under 2</div>
+                    </div>
+                    <div class="guests-controls">
+                        <button class="guests-btn" id="infantsDecrease">-</button>
+                        <span class="guests-count" id="infantsCount">0</span>
+                        <button class="guests-btn" id="infantsIncrease">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Listings Section -->
+    <section class="listings-section" id="listings">
+        <div class="listings-container">
+            <div class="section-header">
+                <h2 class="section-title">Available <span class="gold-text">Properties</span></h2>
+            </div>
+            <div class="listings-wrapper">
+                <button class="scroll-arrow scroll-left" id="scrollLeft">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <div class="listings-grid" id="listingsGrid">
+                    <!-- Property cards will be dynamically inserted here -->
+                </div>
+                <button class="scroll-arrow scroll-right" id="scrollRight">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Premium <span class="gold-text">Amenities</span> & Services</h2>
+                <p class="section-description">Experience luxury living with our world-class amenities and personalized on-demand services designed to exceed your expectations.</p>
+            </div>
+            
+            <!-- Amenities Grid -->
+            <div class="amenities-container">
+                <h3 class="subsection-title">Property Amenities</h3>
+                <div class="amenities-grid">
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="waves"></i>
+                        </div>
+                        <h4 class="amenity-title">Swimming Pool</h4>
+                        <p class="amenity-description">Refreshing infinity pools with stunning city views and poolside lounging areas.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="dumbbell"></i>
+                        </div>
+                        <h4 class="amenity-title">Fitness Center</h4>
+                        <p class="amenity-description">State-of-the-art gym equipment and dedicated workout spaces available 24/7.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="utensils"></i>
+                        </div>
+                        <h4 class="amenity-title">Gourmet Kitchen</h4>
+                        <p class="amenity-description">Fully equipped modern kitchens with premium appliances and cookware.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="wifi"></i>
+                        </div>
+                        <h4 class="amenity-title">High-Speed WiFi</h4>
+                        <p class="amenity-description">Complimentary fiber-optic internet with speeds up to 1GB for work and entertainment.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="wind"></i>
+                        </div>
+                        <h4 class="amenity-title">Climate Control</h4>
+                        <p class="amenity-description">Individual air conditioning and heating systems for optimal comfort year-round.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="tv"></i>
+                        </div>
+                        <h4 class="amenity-title">Smart Entertainment</h4>
+                        <p class="amenity-description">65" Smart TVs with Netflix, streaming services, and premium cable channels.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="car"></i>
+                        </div>
+                        <h4 class="amenity-title">Secure Parking</h4>
+                        <p class="amenity-description">Covered parking spaces with 24/7 security and electric vehicle charging stations.</p>
+                    </div>
+                    
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h4 class="amenity-title">24/7 Security</h4>
+                        <p class="amenity-description">Round-the-clock security personnel, CCTV monitoring, and secure access systems.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- On-Demand Services -->
+            <div class="services-container">
+                <h3 class="subsection-title">On-Demand Services</h3>
+                <div class="services-grid">
+                    <div class="service-card premium">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i data-lucide="utensils"></i>
+                            </div>
+                            <div class="service-info">
+                                <h4 class="service-title">Personal Chef Service</h4>
+                                <span class="service-price">From ₦25,000/meal</span>
+                            </div>
+                        </div>
+                        <p class="service-description">Professional chefs prepare gourmet meals in your apartment using fresh, local ingredients.</p>
+                        <ul class="service-features">
+                            <li>Custom menu planning</li>
+                            <li>Dietary restrictions accommodated</li>
+                            <li>Full kitchen cleanup included</li>
+                        </ul>
+                        <a href="#contact" class="service-btn">Request Chef</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i data-lucide="car"></i>
+                            </div>
+                            <div class="service-info">
+                                <h4 class="service-title">Airport Transfer</h4>
+                                <span class="service-price">From ₦15,000</span>
+                            </div>
+                        </div>
+                        <p class="service-description">Luxury vehicle transfers to and from Lagos and Abuja airports with professional drivers.</p>
+                        <ul class="service-features">
+                            <li>Meet & greet service</li>
+                            <li>Flight tracking</li>
+                            <li>Premium vehicles</li>
+                        </ul>
+                        <a href="#contact" class="service-btn">Book Transfer</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i data-lucide="sparkles"></i>
+                            </div>
+                            <div class="service-info">
+                                <h4 class="service-title">Housekeeping</h4>
+                                <span class="service-price">From ₦8,000/visit</span>
+                            </div>
+                        </div>
+                        <p class="service-description">Professional cleaning services to keep your apartment spotless during your stay.</p>
+                        <ul class="service-features">
+                            <li>Daily or weekly service</li>
+                            <li>Eco-friendly products</li>
+                            <li>Laundry service available</li>
+                        </ul>
+                        <a href="#contact" class="service-btn">Schedule Cleaning</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i data-lucide="shopping-bag"></i>
+                            </div>
+                            <div class="service-info">
+                                <h4 class="service-title">Grocery Delivery</h4>
+                                <span class="service-price">From ₦5,000 delivery</span>
+                            </div>
+                        </div>
+                        <p class="service-description">Fresh groceries and essentials delivered directly to your apartment door.</p>
+                        <ul class="service-features">
+                            <li>Same-day delivery</li>
+                            <li>Premium local markets</li>
+                            <li>Personal shopping service</li>
+                        </ul>
+                        <a href="#contact" class="service-btn">Order Groceries</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i data-lucide="massage"></i>
+                            </div>
+                            <div class="service-info">
+                                <h4 class="service-title">Spa & Wellness</h4>
+                                <span class="service-price">From ₦20,000/session</span>
+                            </div>
+                        </div>
+                        <p class="service-description">In-apartment massage therapy and wellness treatments for ultimate relaxation.</p>
+                        <ul class="service-features">
+                            <li>Licensed therapists</li>
+                            <li>Various massage types</li>
+                            <li>Aromatherapy options</li>
+                        </ul>
+                        <a href="#contact" class="service-btn">Book Spa</a>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i data-lucide="briefcase"></i>
+                            </div>
+                            <div class="service-info">
+                                <h4 class="service-title">Business Support</h4>
+                                <span class="service-price">From ₦10,000/hour</span>
+                            </div>
+                        </div>
+                        <p class="service-description">Professional business services including printing, courier, and meeting room access.</p>
+                        <ul class="service-features">
+                            <li>Document services</li>
+                            <li>Meeting room booking</li>
+                            <li>Courier services</li>
+                        </ul>
+                        <a href="#contact" class="service-btn">Get Support</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Request CTA -->
+            <div class="service-cta">
+                <div class="cta-content">
+                    <h3>Need Something Special?</h3>
+                    <p>Our concierge team is available 24/7 to arrange any additional services or experiences you desire.</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="cta-btn primary" id="contactConcierge">Contact Concierge</a>
+                        <a href="#services" class="cta-btn secondary" id="viewAllServices">View All Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In <span class="gold-text">Touch</span></h2>
+                <p class="section-description">Ready to experience luxury living? Contact us today to book your perfect stay.</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <p>+234 903 926 9846</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="mail"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>info@luxstay.ng</p>
+                            <p>bookings@luxstay.ng</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Office</h3>
+                            <p>123 Victoria Island</p>
+                            <p>Lagos, Nigeria</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="message-circle"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>WhatsApp</h3>
+                            <p>+234 903 926 9846</p>
+                            <a href="https://wa.me/2349039269846" target="_blank" class="whatsapp-link">Chat with us</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form class="contact-form-container">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Your Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="contact-submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3 class="logo-text">LuxStay</h3>
+                        <p class="footer-tagline">Experience Luxury Living</p>
+                    </div>
+                    <p class="footer-description">
+                        Nigeria's premier shortlet apartment service, offering luxury accommodations 
+                        in prime locations across Lagos and Abuja.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://wa.me/2349039269846" class="social-link" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#apartments">Find Apartments</a></li>
+                        <li><a href="#services">Services & Amenities</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Locations -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Our Locations</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Lekki, Lagos</a></li>
+                        <li><a href="#">Victoria Island, Lagos</a></li>
+                        <li><a href="#">Ikoyi, Lagos</a></li>
+                        <li><a href="#">Abuja, FCT</a></li>
+                        <li><a href="#">Yaba, Lagos</a></li>
+                        <li><a href="#">Surulere, Lagos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i class="fas fa-phone contact-icon-fa"></i>
+                            <div>
+                                <p>+234 903 926 9846</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope contact-icon-fa"></i>
+                            <div>
+                                <p>info@luxstay.ng</p>
+                                <p>bookings@luxstay.ng</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon-fa"></i>
+                            <div>
+                                <p>123 Victoria Island</p>
+                                <p>Lagos, Nigeria</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        &copy; 2026 LuxStay. All rights reserved.
+                    </p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cancellation Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="shared/api-client.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons after all content is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+        
+        // Also initialize icons after page load to catch any dynamically added content
+        window.addEventListener('load', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

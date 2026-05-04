@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "name": "lekki-stays-user",
+  "builds": [
+    {
+      "src": "server/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/server.js"
+    },
+    {
+      "src": "/listing-detail.css",
+      "dest": "/public/listings/listing-detail.css"
+    },
+    {
+      "src": "/listing-detail.js",
+      "dest": "/public/listings/listing-detail.js"
+    },
+    {
+      "src": "/api-client.js",
+      "dest": "/public/shared/api-client.js"
+    },
+    {
+      "src": "/booking.css",
+      "dest": "/public/booking/booking.css"
+    },
+    {
+      "src": "/booking.js",
+      "dest": "/public/booking/booking.js"
+    },
+    {
+      "src": "/search-results.css",
+      "dest": "/public/search/search-results.css"
+    },
+    {
+      "src": "/search-results.js",
+      "dest": "/public/search/search-results.js"
+    },
+    {
+      "src": "/styles.css",
+      "dest": "/public/styles.css"
+    },
+    {
+      "src": "/script.js",
+      "dest": "/public/script.js"
+    },
+    {
+      "src": "/listings/(.*)",
+      "dest": "/public/listings/$1"
+    },
+    {
+      "src": "/booking/(.*)",
+      "dest": "/public/booking/$1"
+    },
+    {
+      "src": "/search/(.*)",
+      "dest": "/public/search/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

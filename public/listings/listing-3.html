@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victoria Island Penthouse | LuxStay</title>
+    <link rel="stylesheet" href="listing-detail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body data-listing-id="3">
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-text">LuxStay</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                <li><a href="../index.html#apartments" class="nav-link">Apartments</a></li>
+                <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <button class="book-now-btn" id="bookNowBtn">Book Now</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Image Gallery Hero -->
+    <section class="gallery-hero">
+        <div class="gallery-container">
+            <div class="main-image-container">
+                <img id="mainImage" class="main-image" src="" alt="">
+            </div>
+            <div class="thumbnail-row" id="thumbnailRow">
+                <!-- Thumbnails will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Info Block -->
+    <section class="property-info">
+        <div class="property-main">
+            <h1 id="propertyTitle" class="property-title"></h1>
+            <div id="propertySpecs" class="property-specs">
+                <!-- Specs will be populated by JavaScript -->
+            </div>
+            <div id="categoryBadge" class="category-badge"></div>
+            <p id="propertyDescription" class="property-description"></p>
+
+            <!-- Amenities Section -->
+            <div class="amenities-section">
+                <h2 class="section-heading">What this place offers</h2>
+                <div id="amenitiesGrid" class="amenities-grid">
+                    <!-- Amenities will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Summary Panel -->
+        <div class="booking-panel">
+            <div class="price-display">
+                <span id="priceAmount" class="price-amount"></span>
+                <span class="price-period">/ night</span>
+            </div>
+
+            <div class="booking-form">
+                <div class="form-row">
+                    <div id="checkinField" class="form-field">
+                        <label class="field-label">Check-in</label>
+                        <div id="checkinValue" class="field-value">Add date</div>
+                    </div>
+                    <div id="checkoutField" class="form-field">
+                        <label class="field-label">Check-out</label>
+                        <div id="checkoutValue" class="field-value">Add date</div>
+                    </div>
+                </div>
+
+                <div class="guests-selector">
+                    <div>
+                        <label class="field-label">Guests</label>
+                        <div class="field-value"><span id="guestCount">1</span> guest</div>
+                    </div>
+                    <div class="guests-controls">
+                        <button id="decreaseGuests" class="guest-btn">-</button>
+                        <button id="increaseGuests" class="guest-btn">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Dropdown -->
+            <div class="calendar-dropdown" id="calendarDropdown">
+                <div class="calendar-header">
+                    <button class="calendar-nav-btn" id="prevMonth">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    <div class="calendar-months">
+                        <div class="calendar-month" id="currentMonth"></div>
+                        <div class="calendar-month" id="nextMonth"></div>
+                    </div>
+                    <button class="calendar-nav-btn" id="nextMonthBtn">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="calendar-grids">
+                    <div class="calendar-grid" id="currentMonthGrid"></div>
+                    <div class="calendar-grid" id="nextMonthGrid"></div>
+                </div>
+                
+                <div class="calendar-footer">
+                    <div class="selected-dates" id="selectedDates">
+                        <span id="checkinDisplay"></span>
+                        <span id="checkoutDisplay"></span>
+                    </div>
+                    <button class="clear-dates-btn" id="clearDatesBtn">Clear dates</button>
+                </div>
+            </div>
+
+            <div id="totalDisplay" class="total-display" style="display: none;">
+                <!-- Total will be populated by JavaScript -->
+            </div>
+
+            <button id="reserveBtn" class="reserve-btn">Reserve Now</button>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <h2 class="section-heading">Where you'll be</h2>
+        <div class="map-container">
+            <iframe id="mapIframe" class="map-iframe" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div id="addressDisplay" class="address-display"></div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="reviews-header">
+            <h2 class="section-heading">Guest Reviews</h2>
+            <div id="averageRating" class="average-rating"></div>
+        </div>
+        <div id="reviewsGrid" class="reviews-grid">
+            <!-- Reviews will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Inline listings data for this page -->
+    <script>
+        const havenListings = [
+            {
+                id: 3,
+                name: "Victoria Island Penthouse",
+                category: "premium stays",
+                guests: 6,
+                bedrooms: 3,
+                bathrooms: 3,
+                price: 120000,
+                pricePerNight: 120000,
+                description: "Stunning three-bedroom penthouse with panoramic views of Lagos lagoon. Features premium finishes, spacious living areas, and exclusive access to rooftop terrace.",
+                address: "1161 Memorial Drive, Victoria Island, Lagos",
+                amenities: ["Swimming pool", "Kitchen", "Air conditioning", "Balcony", "Rooftop terrace", "WiFi", "Smart TV", "Gym", "Concierge"],
+                images: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", 
+                        "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", 
+                        "https://images.unsplash.com/photo-1574180045827-681f8a1a9622?ixlib=rb-4.0.3&auto=format&fit=crop&w=2080&q=80"],
+                reviews: [
+                    { name: "Chidi N.", rating: 5, comment: "Breathtaking views and luxurious amenities. Perfect for special occasions!", date: "March 2026" },
+                    { name: "Funmi K.", rating: 5, comment: "The rooftop terrace is absolutely amazing. Best stay in Lagos!", date: "February 2026" }
+                ]
+            }
+        ];
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3 class="logo-text">LuxStay</h3>
+                        <p class="footer-tagline">Experience Luxury Living</p>
+                    </div>
+                    <p class="footer-description">
+                        Nigeria's premier shortlet apartment service, offering luxury accommodations 
+                        in prime locations across Lagos and Abuja.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i data-lucide="facebook"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i data-lucide="instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        <a href="https://wa.me/2349039269846" class="social-link" aria-label="WhatsApp">
+                            <i data-lucide="message-circle"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#hero">Home</a></li>
+                        <li><a href="../index.html#apartments">Find Apartments</a></li>
+                        <li><a href="../index.html#services">Services & Amenities</a></li>
+                        <li><a href="../index.html#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Locations -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Our Locations</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Lekki, Lagos</a></li>
+                        <li><a href="../index.html">Victoria Island, Lagos</a></li>
+                        <li><a href="../index.html">Ikoyi, Lagos</a></li>
+                        <li><a href="../index.html">Abuja, FCT</a></li>
+                        <li><a href="../index.html">Yaba, Lagos</a></li>
+                        <li><a href="../index.html">Surulere, Lagos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i data-lucide="phone"></i>
+                            <div>
+                                <p>+234 903 926 9846</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i data-lucide="mail"></i>
+                            <div>
+                                <p>info@luxstay.ng</p>
+                                <p>bookings@luxstay.ng</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i data-lucide="map-pin"></i>
+                            <div>
+                                <p>123 Victoria Island</p>
+                                <p>Lagos, Nigeria</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        &copy; 2026 LuxStay. All rights reserved.
+                    </p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cancellation Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/api-client.js"></script>
+    <script src="listing-detail.js"></script>
+    <script>
+        // Initialize Lucide icons after all content is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+        
+        // Also initialize icons after page load
+        window.addEventListener('load', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

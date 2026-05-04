@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Reservation - Haven</title>
+    <link rel="stylesheet" href="booking.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-text">LuxStay</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                <li><a href="../index.html#apartments" class="nav-link">Apartments</a></li>
+                <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <button class="book-now-btn" id="bookNowBtn">Book Now</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="booking-header">
+        <div class="container">
+            <h1 class="page-title">Complete Your Reservation</h1>
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a>
+                <span class="breadcrumb-separator">></span>
+                <span id="apartmentBreadcrumb">Apartment</span>
+                <span class="breadcrumb-separator">></span>
+                <span>Booking</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="booking-main">
+        <div class="container">
+            <!-- Error State (hidden by default) -->
+            <div class="error-state" id="errorState" style="display: none;">
+                <div class="error-content">
+                    <h2>Something went wrong</h2>
+                    <p>Please go back and select your dates.</p>
+                    <button class="btn-primary" onclick="window.history.back()">Go Back</button>
+                </div>
+            </div>
+
+            <!-- Pending Bookings (Admin View) -->
+            <div class="pending-bookings-section" id="pendingBookingsSection" style="display: none;">
+                <div class="section-header">
+                    <h2>Pending Booking Requests</h2>
+                    <p class="section-subtitle">Review and confirm or decline booking requests</p>
+                </div>
+                <div class="bookings-list" id="bookingsList"></div>
+            </div>
+
+            <!-- Booking Content (hidden until data loads) -->
+            <div class="booking-content" id="bookingContent" style="display: none;">
+                <!-- Row 1: Two Equal Cards -->
+                <div class="booking-row">
+                    <!-- Left Card: Booking Summary -->
+                    <div class="booking-card summary-card">
+                        <div class="card-header">
+                            <h3>Booking Summary</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="listing-preview">
+                                <img id="listingThumbnail" src="" alt="" class="listing-image">
+                                <div class="listing-info">
+                                    <h4 id="listingName" class="listing-name"></h4>
+                                    <span id="categoryBadge" class="category-badge"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="divider"></div>
+                            
+                            <div class="booking-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Check-in:</span>
+                                    <span id="checkinDate" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Check-out:</span>
+                                    <span id="checkoutDate" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Duration:</span>
+                                    <span id="durationNights" class="detail-value"></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Guests:</span>
+                                    <span id="guestCount" class="detail-value"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="divider"></div>
+                            
+                            <div class="price-breakdown">
+                                <div class="price-row">
+                                    <span class="price-label" id="priceLabel"></span>
+                                    <span id="subtotalAmount" class="price-value"></span>
+                                </div>
+                                <div class="price-row">
+                                    <span class="price-label">Caution fee</span>
+                                    <span class="price-value">₦10,000</span>
+                                </div>
+                                <div class="price-divider"></div>
+                                <div class="price-row total-row">
+                                    <span class="price-label">Total</span>
+                                    <span id="totalAmount" class="price-value"></span>
+                                </div>
+                            </div>
+                            
+                            <a href="#" id="editDatesLink" class="edit-dates-link">Edit Dates</a>
+                        </div>
+                    </div>
+
+                    <!-- Right Card: Payment Method -->
+                    <div class="booking-card payment-card">
+                        <div class="card-header">
+                            <h3>Payment Method</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="payment-options">
+                                <div class="payment-option selected" data-method="whatsapp">
+                                    <div class="option-icon">
+                                        <i data-lucide="message-circle"></i>
+                                    </div>
+                                    <div class="option-content">
+                                        <div class="option-title">Pay via WhatsApp</div>
+                                        <div class="option-subtitle">Message us to arrange payment and confirm your booking</div>
+                                    </div>
+                                    <div class="option-radio">
+                                        <div class="radio-dot active"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="payment-note">
+                                <i data-lucide="info"></i>
+                                <p>After submitting your booking, WhatsApp will open with a pre-filled message. Send it to confirm your reservation and arrange payment details.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Guest Details Form -->
+                <div class="guest-details-section">
+                    <h3 class="section-title">Your Details</h3>
+                    <form class="guest-form" id="guestForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName" class="form-label">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" class="form-input" required>
+                                <div class="error-message" id="fullNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="080XXXXXXXX" required>
+                                <div class="error-message" id="phoneError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="specialRequests" class="form-label">Special Requests (Optional)</label>
+                            <textarea id="specialRequests" name="specialRequests" class="form-textarea" placeholder="Any special requests or questions?"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hearAbout" class="form-label">How did you hear about us? *</label>
+                            <select id="hearAbout" name="hearAbout" class="form-select" required>
+                                <option value="">Select an option</option>
+                                <option value="Google">Google</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Referral">Referral</option>
+                                <option value="Word of Mouth">Word of Mouth</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="error-message" id="hearAboutError"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Accordion: Policies & Info -->
+                <div class="policies-section">
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" data-target="cancellation">
+                                <span>Cancellation Policy</span>
+                                <i data-lucide="plus" class="accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content" id="cancellation">
+                                <p>Cancellations made 48 hours before check-in are eligible for a full refund minus the caution fee. Cancellations within 48 hours of check-in are non-refundable.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header" data-target="houseRules">
+                                <span>House Rules</span>
+                                <i data-lucide="plus" class="accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content" id="houseRules">
+                                <ul id="houseRulesList">
+                                    <li>No smoking inside the apartment</li>
+                                    <li>No parties or loud gatherings</li>
+                                    <li>Quiet hours: 10pm – 7am</li>
+                                    <li>No unauthorized guests</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header" data-target="checkinInstructions">
+                                <span>Check-in Instructions</span>
+                                <i data-lucide="plus" class="accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content" id="checkinInstructions">
+                                <p>Check-in details and apartment access instructions will be sent to your WhatsApp number after your booking is confirmed. Check-in time is from 2:00 PM.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirm Reservation Button -->
+                <div class="confirm-section">
+                    <button class="confirm-btn" id="confirmBtn" disabled>Confirm Reservation</button>
+                </div>
+
+                <!-- Success State (hidden by default) -->
+                <div class="success-state" id="successState" style="display: none;">
+                    <div class="success-content">
+                        <div class="success-icon">
+                            <i data-lucide="check-circle" style="width: 80px; height: 80px; color: #10B981;"></i>
+                        </div>
+                        <h2 class="success-title">Reservation Confirmed!</h2>
+                        <p class="success-subtitle">Thank you for choosing LuxStay</p>
+                        
+                        <div class="success-details">
+                            <div class="success-section">
+                                <h3>Booking Details</h3>
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Booking ID</span>
+                                        <span class="detail-value" id="successBookingId">#BK-XXXXX</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Guest Name</span>
+                                        <span class="detail-value" id="successGuestName">-</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Apartment</span>
+                                        <span class="detail-value" id="successApartment">-</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Check-in</span>
+                                        <span class="detail-value" id="successCheckin">-</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Check-out</span>
+                                        <span class="detail-value" id="successCheckout">-</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Guests</span>
+                                        <span class="detail-value" id="successGuests">-</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Total Amount</span>
+                                        <span class="detail-value success-amount" id="successTotal">₦0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="success-section">
+                                <h3>What Happens Next?</h3>
+                                <div class="next-steps">
+                                    <div class="step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h4>Confirmation</h4>
+                                            <p>Our team will review your booking and contact you within 24 hours</p>
+                                        </div>
+                                    </div>
+                                    <div class="step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h4>Payment</h4>
+                                            <p>You'll receive payment instructions via WhatsApp or email</p>
+                                        </div>
+                                    </div>
+                                    <div class="step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h4>Check-in Details</h4>
+                                            <p>We'll send you check-in instructions 24 hours before arrival</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="success-section">
+                                <h3>Need Help?</h3>
+                                <p class="contact-info">Contact us on WhatsApp: <a href="https://wa.me/2349039269846" class="whatsapp-link">+234 903 926 9846</a></p>
+                            </div>
+                        </div>
+
+                        <div class="success-actions">
+                            <button class="btn-primary" onclick="window.location.href='../index.html'">
+                                <i data-lucide="home"></i>
+                                <span>Back to Home</span>
+                            </button>
+                            <button class="btn-secondary" onclick="window.print()">
+                                <i data-lucide="printer"></i>
+                                <span>Print Confirmation</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3 class="logo-text">LuxStay</h3>
+                        <p class="footer-tagline">Experience Luxury Living</p>
+                    </div>
+                    <p class="footer-description">
+                        Nigeria's premier shortlet apartment service, offering luxury accommodations 
+                        in prime locations across Lagos and Abuja.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://wa.me/2349039269846" class="social-link" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#hero">Home</a></li>
+                        <li><a href="../index.html#apartments">Find Apartments</a></li>
+                        <li><a href="../index.html#services">Services & Amenities</a></li>
+                        <li><a href="../index.html#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Locations -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Our Locations</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Lekki, Lagos</a></li>
+                        <li><a href="../index.html">Victoria Island, Lagos</a></li>
+                        <li><a href="../index.html">Ikoyi, Lagos</a></li>
+                        <li><a href="../index.html">Abuja, FCT</a></li>
+                        <li><a href="../index.html">Yaba, Lagos</a></li>
+                        <li><a href="../index.html">Surulere, Lagos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i class="fas fa-phone contact-icon-fa"></i>
+                            <div>
+                                <p>+234 903 926 9846</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope contact-icon-fa"></i>
+                            <div>
+                                <p>info@luxstay.ng</p>
+                                <p>bookings@luxstay.ng</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon-fa"></i>
+                            <div>
+                                <p>123 Victoria Island</p>
+                                <p>Lagos, Nigeria</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        &copy; 2026 LuxStay. All rights reserved.
+                    </p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cancellation Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/api-client.js"></script>
+    <script src="booking.js"></script>
+    <script>
+        // Initialize Lucide icons after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+        
+        // Also initialize after page load
+        window.addEventListener('load', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results | LuxStay</title>
+    <link rel="stylesheet" href="../styles.css?v=2">
+    <link rel="stylesheet" href="search-results.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-text">LuxStay</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                <li><a href="../index.html#apartments" class="nav-link">Apartments</a></li>
+                <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="book-now-btn" id="bookNowBtn">Book Now</button>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Summary Section -->
+    <section class="search-summary">
+        <div class="container">
+            <h1 class="search-title">Available Apartments</h1>
+            <div class="search-params" id="searchParams">
+                <div class="param-item">
+                    <i data-lucide="map-pin"></i>
+                    <span id="displayLocation">All Locations</span>
+                </div>
+                <div class="param-item">
+                    <i data-lucide="calendar"></i>
+                    <span id="displayDates">Select dates</span>
+                </div>
+                <div class="param-item">
+                    <i data-lucide="users"></i>
+                    <span id="displayGuests">1 guest</span>
+                </div>
+            </div>
+            <button class="modify-search-btn" id="modifySearchBtn">
+                <i data-lucide="search"></i>
+                <span>Modify Search</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <div class="results-header">
+                <h2 class="results-count" id="resultsCount">Loading...</h2>
+                <div class="sort-controls">
+                    <label for="sortSelect">Sort by:</label>
+                    <select id="sortSelect" class="sort-select">
+                        <option value="recommended">Recommended</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="guests">Guest Capacity</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner">
+                    <i data-lucide="loader-2"></i>
+                </div>
+                <p>Searching for available apartments...</p>
+            </div>
+
+            <!-- No Results State -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">
+                    <i data-lucide="search-x"></i>
+                </div>
+                <h3>No apartments found</h3>
+                <p>Try adjusting your search criteria or dates</p>
+                <button class="primary-btn" onclick="window.location.href='../index.html'">
+                    <span>Back to Home</span>
+                </button>
+            </div>
+
+            <!-- Results Carousel -->
+            <div class="results-carousel-container">
+                <button class="carousel-nav-btn prev-btn" id="prevResultsBtn">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <div class="results-carousel" id="resultsCarousel">
+                    <!-- Results will be inserted here -->
+                </div>
+                <button class="carousel-nav-btn next-btn" id="nextResultsBtn">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #fff; padding: 4rem 2rem 2rem; margin-top: 3rem;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <div>
+                    <div style="margin-bottom: 1rem;">
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #D4AF37; margin-bottom: 0.5rem;">LuxStay</h3>
+                        <p style="color: #999; font-size: 0.9rem; margin: 0;">Experience Luxury Living</p>
+                    </div>
+                    <p style="color: #ccc; line-height: 1.6; margin-bottom: 1.5rem;">
+                        Nigeria's premier shortlet apartment service, offering luxury accommodations 
+                        in prime locations across Lagos and Abuja.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center; color: #D4AF37; text-decoration: none; transition: all 0.3s ease;" aria-label="Facebook">
+                            <i data-lucide="facebook"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center; color: #D4AF37; text-decoration: none; transition: all 0.3s ease;" aria-label="Instagram">
+                            <i data-lucide="instagram"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center; color: #D4AF37; text-decoration: none; transition: all 0.3s ease;" aria-label="Twitter">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center; color: #D4AF37; text-decoration: none; transition: all 0.3s ease;" aria-label="LinkedIn">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; color: #D4AF37;">Quick Links</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html#hero" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Home</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html#apartments" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Find Apartments</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html#about" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">About Us</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html#contact" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; color: #D4AF37;">Our Locations</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Lekki, Lagos</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Victoria Island, Lagos</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Ikoyi, Lagos</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="../index.html" style="color: #ccc; text-decoration: none; transition: color 0.3s ease;">Abuja, FCT</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; color: #D4AF37;">Contact Info</h4>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; color: #ccc;">
+                            <i data-lucide="phone" style="color: #D4AF37; width: 20px;"></i>
+                            <span>+234 803 456 7890</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.8rem; color: #ccc;">
+                            <i data-lucide="mail" style="color: #D4AF37; width: 20px;"></i>
+                            <span>info@luxstay.ng</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.8rem; color: #ccc;">
+                            <i data-lucide="map-pin" style="color: #D4AF37; width: 20px;"></i>
+                            <span>Lekki Phase 1, Lagos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <p style="color: #999; margin: 0;">
+                        &copy; 2026 LuxStay. All rights reserved.
+                    </p>
+                    <div style="display: flex; gap: 2rem;">
+                        <a href="#" style="color: #999; text-decoration: none; transition: color 0.3s ease;">Privacy Policy</a>
+                        <a href="#" style="color: #999; text-decoration: none; transition: color 0.3s ease;">Terms of Service</a>
+                        <a href="#" style="color: #999; text-decoration: none; transition: color 0.3s ease;">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/api-client.js"></script>
+    <script src="search-results.js"></script>
+    <script>
+        // Initialize Lucide icons multiple times to ensure they load
+        function initIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+                console.log('Lucide icons initialized');
+            } else {
+                console.error('Lucide not loaded');
+            }
+        }
+        
+        // Initialize immediately
+        initIcons();
+        
+        // Initialize on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', initIcons);
+        
+        // Initialize on window load
+        window.addEventListener('load', initIcons);
+        
+        // Initialize after a delay as final backup
+        setTimeout(initIcons, 500);
+        setTimeout(initIcons, 1000);
+    </script>
+</body>
+</html>
