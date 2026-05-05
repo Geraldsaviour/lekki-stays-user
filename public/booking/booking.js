@@ -433,10 +433,18 @@ async function handleSubmit() {
                 window.open(response.whatsappLink, '_blank');
             }
             
-            // Show success page
+            // Show success page with booking reference
             showSuccessState(formData, booking);
         } else {
-            throw new Error(response.error || 'Failed to create booking');
+            // Handle specific error cases with user-friendly messages
+            if (response.error === 'Apartment not available' || response.message?.includes('already booked')) {
+                showBookingUnavailableError();
+            } else if (response.error === 'Guest capacity exceeded') {
+                alert(`❌ Guest Capacity Exceeded\n\n${response.message || 'The selected apartment cannot accommodate the number of guests specified.'}\n\nPlease select a different apartment or reduce the number of guests.`);
+            } else {
+                throw new Error(response.error || 'Failed to create booking');
+            }
+            return; // Stop execution after showing error
         }
         
     } catch (error) {
@@ -457,6 +465,69 @@ function calculateTotalPrice() {
     const subtotal = currentListing.pricePerNight * nights;
     // Backend expects just the subtotal (nights × price per night), not including caution fee
     return subtotal;
+}
+
+function showBookingUnavailableError() {
+    // Create a custom modal for unavailable booking
+    const modal = document.createElement('div');
+    modal.className = 'booking-error-modal';
+    modal.innerHTML = `
+        <div class="booking-error-overlay"></div>
+        <div class="booking-error-content">
+            <div class="booking-error-icon">
+                <i data-lucide="calendar-x"></i>
+            </div>
+            <h2 class="booking-error-title">Apartment Not Available</h2>
+            <p class="booking-error-message">
+                Unfortunately, this apartment has already been booked for the selected dates.
+            </p>
+            <p class="booking-error-suggestion">
+                Please try:
+            </p>
+            <ul class="booking-error-list">
+                <li>Selecting different dates</li>
+                <li>Choosing another apartment</li>
+                <li>Contacting us for alternative options</li>
+            </ul>
+            <div class="booking-error-actions">
+                <button class="booking-error-btn primary" onclick="window.location.href='../search/search-results.html'">
+                    <i data-lucide="search"></i>
+                    Browse Other Apartments
+                </button>
+                <button class="booking-error-btn secondary" onclick="closeBookingErrorModal()">
+                    <i data-lucide="calendar"></i>
+                    Try Different Dates
+                </button>
+                <a href="https://wa.me/2349039269846?text=Hello!%20I%20need%20help%20finding%20an%20available%20apartment." 
+                   class="booking-error-btn whatsapp" target="_blank">
+                    <i data-lucide="message-circle"></i>
+                    Contact Us on WhatsApp
+                </a>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+    
+    // Animate modal in
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+function closeBookingErrorModal() {
+    const modal = document.querySelector('.booking-error-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
 }
 
 function getFormData() {
