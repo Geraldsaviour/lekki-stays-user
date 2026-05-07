@@ -283,7 +283,7 @@ class SearchResults {
                         <span class="price-amount">₦${apartment.pricePerNight.toLocaleString()}</span>
                         <span class="price-period">per night</span>
                     </div>
-                    <button class="view-details-btn" onclick="window.location.href='../listings/listing-${listingNumber}.html'">
+                    <button class="view-details-btn" onclick="window.location.href='../listings/listing.html?id=${apartment.id}'">
                         View Details
                     </button>
                 </div>

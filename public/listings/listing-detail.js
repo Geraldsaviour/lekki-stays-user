@@ -54,17 +54,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function initializeDetailPage() {
-    // Get listing number from URL (e.g., listing-6.html -> 6)
+    // Support both formats:
+    // Old: /listings/listing-6.html  → apt-6
+    // New: /listings/listing.html?id=apt-6  → apt-6
+    const urlParams = new URLSearchParams(window.location.search);
     const urlPath = window.location.pathname;
-    const listingNumber = urlPath.match(/listing-(\d+)\.html/)?.[1];
-    
-    if (!listingNumber) {
-        console.error('Could not determine listing number from URL');
+
+    let apartmentId = urlParams.get('id');
+
+    if (!apartmentId) {
+        // Fallback: read from data-listing-id attribute (old per-file format)
+        const bodyId = document.body.getAttribute('data-listing-id');
+        if (bodyId) {
+            // If it's a number, prefix with apt-
+            apartmentId = isNaN(bodyId) ? bodyId : `apt-${bodyId}`;
+        }
+    }
+
+    if (!apartmentId) {
+        // Last fallback: parse from filename listing-6.html
+        const listingNumber = urlPath.match(/listing-(\d+)\.html/)?.[1];
+        if (listingNumber) apartmentId = `apt-${listingNumber}`;
+    }
+
+    if (!apartmentId) {
+        console.error('Could not determine apartment ID');
+        showErrorState();
         return;
     }
-    
-    // Convert listing number to apartment ID (6 -> apt-6)
-    const apartmentId = `apt-${listingNumber}`;
     
     try {
         // Fetch apartment data from API

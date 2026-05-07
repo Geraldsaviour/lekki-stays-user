@@ -166,9 +166,7 @@ function showDateConflictPopup(booking) {
 }
 
 function goBackToListing() {
-    // Convert apartment ID to listing number (apt-1 -> 1, apt-2 -> 2, etc.)
-    const listingNumber = bookingData.id.replace('apt-', '');
-    window.location.href = `../listings/listing-${listingNumber}.html`;
+    window.location.href = `../listings/listing.html?id=${bookingData.id}`;
 }
 
 function contactViaWhatsApp() {
@@ -213,9 +211,7 @@ function populateBookingData() {
     document.getElementById('subtotalAmount').textContent = `₦${subtotal.toLocaleString('en-NG')}`;
     document.getElementById('totalAmount').textContent = `₦${grandTotal.toLocaleString('en-NG')}`;
     
-    // Set edit dates link
-    const listingNumber = bookingData.id.replace('apt-', '');
-    document.getElementById('editDatesLink').href = `../listings/listing-${listingNumber}.html`;
+    document.getElementById('editDatesLink').href = `../listings/listing.html?id=${bookingData.id}`;
     
     // Populate house rules if available
     if (currentListing.rules && currentListing.rules.length > 0) {
