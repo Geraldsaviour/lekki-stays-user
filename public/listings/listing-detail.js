@@ -87,6 +87,11 @@ async function initializeDetailPage() {
         // Fetch apartment data from API
         const response = await window.lekkirStaysAPI.getApartment(apartmentId);
         
+        if (!response.success && response.onHold) {
+            showOnHoldState(response.reason);
+            return;
+        }
+
         if (!response.success || !response.apartment) {
             console.error('Failed to load apartment data:', response);
             showErrorState();
@@ -121,12 +126,158 @@ async function initializeDetailPage() {
     }
 }
 
-function showErrorState() {
+function showOnHoldState(reason) {
+    document.title = 'Temporarily Unavailable | LuxStay';
     document.body.innerHTML = `
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; text-align: center;">
-            <h1 style="font-size: 2rem; margin-bottom: 1rem;">Apartment Not Found</h1>
-            <p style="margin-bottom: 2rem;">Sorry, we couldn't load this apartment's details.</p>
-            <a href="../index.html" style="padding: 1rem 2rem; background: #D4AF37; color: white; text-decoration: none; border-radius: 8px;">Back to Home</a>
+        <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+        ">
+            <div style="
+                background: #1a1a1a;
+                border: 1px solid #2a2a2a;
+                border-radius: 20px;
+                padding: 3rem 2.5rem;
+                max-width: 480px;
+                width: 100%;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            ">
+                <div style="
+                    width: 72px;
+                    height: 72px;
+                    background: rgba(245, 158, 11, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 1.5rem;
+                ">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                </div>
+                <h1 style="
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    color: #F5F0E8;
+                    margin-bottom: 0.75rem;
+                ">Temporarily Unavailable</h1>
+                <p style="
+                    color: #9CA3AF;
+                    font-size: 1rem;
+                    line-height: 1.6;
+                    margin-bottom: ${reason ? '1.5rem' : '2rem'};
+                ">This apartment is currently not available for booking.</p>
+                ${reason ? `
+                <div style="
+                    background: rgba(245, 158, 11, 0.08);
+                    border: 1px solid rgba(245, 158, 11, 0.25);
+                    border-radius: 10px;
+                    padding: 1rem 1.25rem;
+                    margin-bottom: 2rem;
+                    text-align: left;
+                ">
+                    <p style="
+                        font-size: 0.8125rem;
+                        font-weight: 600;
+                        color: #F59E0B;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        margin-bottom: 0.375rem;
+                    ">Reason</p>
+                    <p style="
+                        color: #D1D5DB;
+                        font-size: 0.9375rem;
+                        line-height: 1.5;
+                        margin: 0;
+                    ">${reason}</p>
+                </div>` : ''}
+                <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="../index.html" style="
+                        padding: 0.875rem 1.75rem;
+                        background: #D4AF37;
+                        color: #0a0a0a;
+                        text-decoration: none;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 0.9375rem;
+                        transition: all 0.2s;
+                    ">Browse Other Apartments</a>
+                    <a href="../index.html#contact" style="
+                        padding: 0.875rem 1.75rem;
+                        background: transparent;
+                        color: #9CA3AF;
+                        text-decoration: none;
+                        border-radius: 10px;
+                        font-weight: 500;
+                        font-size: 0.9375rem;
+                        border: 1px solid #2a2a2a;
+                    ">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function showErrorState() {
+    document.title = 'Not Found | LuxStay';
+    document.body.innerHTML = `
+        <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+        ">
+            <div style="
+                background: #1a1a1a;
+                border: 1px solid #2a2a2a;
+                border-radius: 20px;
+                padding: 3rem 2.5rem;
+                max-width: 480px;
+                width: 100%;
+            ">
+                <div style="
+                    width: 72px;
+                    height: 72px;
+                    background: rgba(239, 68, 68, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 1.5rem;
+                ">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="15" y1="9" x2="9" y2="15"/>
+                        <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                </div>
+                <h1 style="font-size: 1.75rem; font-weight: 700; color: #F5F0E8; margin-bottom: 0.75rem;">Apartment Not Found</h1>
+                <p style="color: #9CA3AF; font-size: 1rem; line-height: 1.6; margin-bottom: 2rem;">Sorry, we couldn't find this apartment.</p>
+                <a href="../index.html" style="
+                    padding: 0.875rem 1.75rem;
+                    background: #D4AF37;
+                    color: #0a0a0a;
+                    text-decoration: none;
+                    border-radius: 10px;
+                    font-weight: 600;
+                    font-size: 0.9375rem;
+                ">Back to Home</a>
+            </div>
         </div>
     `;
 }

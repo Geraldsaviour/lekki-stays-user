@@ -222,18 +222,34 @@ router.get('/:id', async (req, res) => {
       .from('apartments')
       .select('*')
       .eq('id', id)
-      .eq('active', true)
-      .eq('on_hold', false)
       .single();
     
     if (error) {
       if (error.code === 'PGRST116') {
         return res.status(404).json({
           success: false,
-          error: 'Apartment not found or unavailable'
+          error: 'Apartment not found'
         });
       }
       throw error;
+    }
+
+    // If apartment is on hold, return a specific response
+    if (apartment.on_hold) {
+      return res.status(200).json({
+        success: false,
+        onHold: true,
+        reason: apartment.hold_reason || null,
+        error: 'This apartment is temporarily unavailable'
+      });
+    }
+
+    // If apartment is inactive, return 404
+    if (!apartment.active) {
+      return res.status(404).json({
+        success: false,
+        error: 'Apartment not found'
+      });
     }
     
     // Get reviews for this apartment
