@@ -78,10 +78,22 @@ function renderApartments() {
     const total = allApartments.length;
     const available = allApartments.filter(a => !a.onHold).length;
     const onHold = allApartments.filter(a => a.onHold).length;
+    const locations = [...new Set(allApartments.map(a => a.location))].length;
+
+    // Update hero stats
+    const statTotal = document.getElementById('statTotal');
+    const statAvailable = document.getElementById('statAvailable');
+    const statLocations = document.getElementById('statLocations');
+    if (statTotal) statTotal.textContent = total;
+    if (statAvailable) statAvailable.textContent = available;
+    if (statLocations) statLocations.textContent = locations;
+
     resultsCount.innerHTML = `
         Showing <strong>${filtered.length}</strong> of <strong>${total}</strong> apartments
-        &nbsp;·&nbsp; <span style="color:#10B981">${available} available</span>
-        &nbsp;·&nbsp; <span style="color:#F59E0B">${onHold} coming soon</span>
+        &nbsp;&nbsp;
+        <span class="badge-available">● ${available} available</span>
+        &nbsp;
+        <span class="badge-hold">● ${onHold} coming soon</span>
     `;
 
     // Empty state
