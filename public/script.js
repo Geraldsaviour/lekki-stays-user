@@ -1,11 +1,33 @@
 // GSAP Animations and Advanced JavaScript
 gsap.registerPlugin(ScrollTrigger, TextPlugin, ScrollToPlugin);
 
+// ============================================================
+// SCROLL POSITION PERSISTENCE
+// Save scroll position before page unloads, restore on load
+// ============================================================
+(function() {
+    const SCROLL_KEY = 'lekki_scroll_y';
+
+    // Save scroll position before refresh/navigation
+    window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+    });
+
+    // Restore scroll position after page fully loads
+    window.addEventListener('load', () => {
+        const savedY = sessionStorage.getItem(SCROLL_KEY);
+        if (savedY !== null) {
+            // Small delay to let page render fully before scrolling
+            setTimeout(() => {
+                window.scrollTo({ top: parseInt(savedY, 10), behavior: 'instant' });
+            }, 100);
+            sessionStorage.removeItem(SCROLL_KEY);
+        }
+    });
+})();
+
 // Preloader functionality
 window.addEventListener('load', () => {
-    // Ensure page starts at top
-    window.scrollTo(0, 0);
-    
     const preloader = document.getElementById('preloader');
     
     // Animate preloader exit
@@ -23,9 +45,6 @@ window.addEventListener('load', () => {
 
 // Initialize animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Ensure page starts at top immediately
-    window.scrollTo(0, 0);
-    
     // Hide body overflow during preloader
     document.body.style.overflow = 'hidden';
     
