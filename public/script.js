@@ -2263,12 +2263,6 @@ Thank you!`;
             });
 
             if (response.success) {
-                // Open admin WhatsApp
-                if (response.adminWhatsappLink) window.open(response.adminWhatsappLink, '_blank');
-                // Open guest WhatsApp after short delay
-                if (response.guestWhatsappLink) {
-                    setTimeout(() => window.open(response.guestWhatsappLink, '_blank'), 800);
-                }
                 // Show success
                 form.style.display = 'none';
                 document.getElementById('serviceSuccessType').textContent = data.serviceType;
