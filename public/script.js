@@ -1619,20 +1619,22 @@ class PropertyListings {
             
             // API returns apartments array with correct structure
             if (response.success && response.apartments && response.apartments.length > 0) {
-                // Map API response to expected format
-                this.listings = response.apartments.map(apt => ({
-                    id: apt.id,
-                    name: apt.name,
-                    category: 'luxury', // Default category for display
-                    maxGuests: apt.maxGuests,
-                    bedrooms: apt.bedrooms,
-                    bathrooms: apt.bathrooms,
-                    pricePerNight: apt.pricePerNight,
-                    description: apt.description || '',
-                    location: apt.location,
-                    amenities: apt.amenities || [],
-                    images: apt.images || []
-                }));
+                // Map API response to expected format, filter out on-hold apartments
+                this.listings = response.apartments
+                    .filter(apt => !apt.onHold && apt.active !== false)
+                    .map(apt => ({
+                        id: apt.id,
+                        name: apt.name,
+                        category: 'luxury',
+                        maxGuests: apt.maxGuests,
+                        bedrooms: apt.bedrooms,
+                        bathrooms: apt.bathrooms,
+                        pricePerNight: apt.pricePerNight,
+                        description: apt.description || '',
+                        location: apt.location,
+                        amenities: apt.amenities || [],
+                        images: apt.images || []
+                    }));
                 console.log('✅ Loaded apartments from API:', this.listings.length);
             } else {
                 console.warn('⚠️ API returned no data, using fallback listings');
@@ -1640,7 +1642,6 @@ class PropertyListings {
             }
         } catch (error) {
             console.error('❌ Error loading apartments, using fallback:', error);
-            // Fallback to static data if API fails
             this.listings = havenListings;
         } finally {
             this.loading = false;
