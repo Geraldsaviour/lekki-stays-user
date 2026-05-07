@@ -101,7 +101,8 @@ router.post('/availability', async (req, res) => {
       const { data: apartments, error } = await supabase
         .from('apartments')
         .select('*')
-        .eq('active', true);
+        .eq('active', true)
+        .eq('on_hold', false);
       
       if (error) throw error;
       
@@ -151,7 +152,8 @@ router.get('/', async (req, res) => {
     let query = supabase
       .from('apartments')
       .select('*')
-      .eq('active', true);
+      .eq('active', true)
+      .eq('on_hold', false);
     
     // Apply guest filter
     if (guests) {
@@ -220,13 +222,15 @@ router.get('/:id', async (req, res) => {
       .from('apartments')
       .select('*')
       .eq('id', id)
+      .eq('active', true)
+      .eq('on_hold', false)
       .single();
     
     if (error) {
       if (error.code === 'PGRST116') {
         return res.status(404).json({
           success: false,
-          error: 'Apartment not found'
+          error: 'Apartment not found or unavailable'
         });
       }
       throw error;
@@ -292,13 +296,15 @@ router.get('/:id/availability', async (req, res) => {
       .from('apartments')
       .select('*')
       .eq('id', id)
+      .eq('active', true)
+      .eq('on_hold', false)
       .single();
     
     if (aptError) {
       if (aptError.code === 'PGRST116') {
         return res.status(404).json({
           success: false,
-          error: 'Apartment not found'
+          error: 'Apartment not found or unavailable'
         });
       }
       throw aptError;
