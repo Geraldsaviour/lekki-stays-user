@@ -14,6 +14,15 @@ class Apartment {
     this.location = data.location;
     this.pricePerNight = data.price_per_night;
     this.maxGuests = data.max_guests;
+    this.bedrooms = data.bedrooms;
+    this.bathrooms = data.bathrooms;
+    this.description = data.description;
+    this.amenities = data.amenities || [];
+    this.images = data.images || [];
+    this.latitude = data.latitude;
+    this.longitude = data.longitude;
+    this.featured = data.featured;
+    this.onHold = data.on_hold;
     this.active = data.active;
     this.createdAt = data.created_at;
   }
@@ -30,6 +39,7 @@ class Apartment {
       .from('apartments')
       .select('*')
       .eq('active', true)
+      .eq('on_hold', false)
       .order('id');
 
     if (error) {
@@ -49,6 +59,7 @@ class Apartment {
       .select('*')
       .eq('id', id)
       .eq('active', true)
+      .eq('on_hold', false)
       .single();
 
     if (error) {
@@ -72,6 +83,7 @@ class Apartment {
       .select('*')
       .eq('slug', slug)
       .eq('active', true)
+      .eq('on_hold', false)
       .single();
 
     if (error) {
@@ -195,6 +207,15 @@ class Apartment {
       location: this.location,
       pricePerNight: this.pricePerNight,
       maxGuests: this.maxGuests,
+      bedrooms: this.bedrooms,
+      bathrooms: this.bathrooms,
+      description: this.description,
+      amenities: this.amenities,
+      images: this.images,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      featured: this.featured,
+      onHold: this.onHold,
       active: this.active,
       createdAt: this.createdAt
     };

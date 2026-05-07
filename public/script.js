@@ -1617,29 +1617,29 @@ class PropertyListings {
             
             const response = await window.lekkirStaysAPI.getApartments();
             
-            // API returns apartments array, not data array
+            // API returns apartments array with correct structure
             if (response.success && response.apartments && response.apartments.length > 0) {
                 // Map API response to expected format
                 this.listings = response.apartments.map(apt => ({
                     id: apt.id,
                     name: apt.name,
-                    category: apt.type || 'luxury', // API uses 'type' not 'category'
+                    category: 'luxury', // Default category for display
                     maxGuests: apt.maxGuests,
                     bedrooms: apt.bedrooms,
                     bathrooms: apt.bathrooms,
                     pricePerNight: apt.pricePerNight,
-                    description: apt.description,
+                    description: apt.description || '',
                     location: apt.location,
                     amenities: apt.amenities || [],
-                    images: apt.photos || apt.images || [] // API uses 'photos' not 'images'
+                    images: apt.images || []
                 }));
-                console.log('Loaded apartments from API:', this.listings.length);
+                console.log('✅ Loaded apartments from API:', this.listings.length);
             } else {
-                console.warn('API returned no data, using fallback listings');
+                console.warn('⚠️ API returned no data, using fallback listings');
                 this.listings = havenListings;
             }
         } catch (error) {
-            console.error('Error loading apartments, using fallback:', error);
+            console.error('❌ Error loading apartments, using fallback:', error);
             // Fallback to static data if API fails
             this.listings = havenListings;
         } finally {
