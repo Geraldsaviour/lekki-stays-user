@@ -65,14 +65,6 @@
       "dest": "/public/apartments/$1"
     },
     {
-      "src": "/booking-status/(.*)",
-      "dest": "/public/booking-status/$1"
-    },
-    {
-      "src": "/booking-status/(.*)",
-      "dest": "/public/booking-status/$1"
-    },
-    {
       "src": "/booking/(.*)",
       "dest": "/public/booking/$1"
     },
@@ -81,15 +73,17 @@
       "dest": "/public/search/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/public/$1",
-      "status": 200
-    }
-  ],
-  "errorHandling": [
-    {
-      "statusCode": 404,
+      "src": "/404.html",
       "dest": "/public/404.html"
+    },
+    {
+      "src": "/(.*)\\.html",
+      "dest": "/public/$1.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/404.html",
+      "status": 404
     }
   ],
   "env": {
