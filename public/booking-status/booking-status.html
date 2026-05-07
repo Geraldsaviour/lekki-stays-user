@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Status | LuxStay</title>
+    <link rel="stylesheet" href="booking-status.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-text">LuxStay</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                <li><a href="../apartments/apartments.html" class="nav-link">Apartments</a></li>
+                <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <button class="book-now-btn" onclick="window.location.href='../index.html#contact'">Book Now</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Track Your Stay</p>
+            <h1 class="hero-title">Booking Status</h1>
+            <p class="hero-subtitle">Enter your booking reference or phone number to check your reservation status</p>
+        </div>
+    </section>
+
+    <!-- Lookup Form -->
+    <main class="status-main">
+        <div class="status-container">
+
+            <!-- Search Card -->
+            <div class="search-card" id="searchCard">
+                <div class="search-card-header">
+                    <div class="search-icon-wrap">
+                        <i data-lucide="search"></i>
+                    </div>
+                    <h2>Find Your Booking</h2>
+                    <p>Use your booking reference (e.g. BK-ABC123) or the phone number you booked with</p>
+                </div>
+
+                <div class="search-tabs">
+                    <button class="tab-btn active" data-tab="ref">
+                        <i data-lucide="hash"></i>
+                        Booking Reference
+                    </button>
+                    <button class="tab-btn" data-tab="phone">
+                        <i data-lucide="phone"></i>
+                        Phone Number
+                    </button>
+                </div>
+
+                <div class="tab-content active" id="tab-ref">
+                    <div class="input-group">
+                        <label>Booking Reference</label>
+                        <div class="input-wrap">
+                            <i data-lucide="hash"></i>
+                            <input type="text" id="refInput" placeholder="e.g. BK-M9X2K1-A3F2" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-phone">
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <div class="input-wrap">
+                            <i data-lucide="phone"></i>
+                            <input type="tel" id="phoneInput" placeholder="e.g. 08012345678" autocomplete="tel">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="search-btn" id="searchBtn">
+                    <i data-lucide="search"></i>
+                    Check Status
+                </button>
+
+                <div class="search-error" id="searchError" style="display:none;"></div>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading-card" id="loadingCard" style="display:none;">
+                <div class="loading-spinner"></div>
+                <p>Looking up your booking...</p>
+            </div>
+
+            <!-- Results -->
+            <div id="resultsSection" style="display:none;"></div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 LuxStay. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="../apartments/apartments.html">Apartments</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/api-client.js"></script>
+    <script src="booking-status.js"></script>
+</body>
+</html>

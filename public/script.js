@@ -2177,3 +2177,113 @@ Thank you!`;
         });
     });
 });
+
+
+// ============================================================
+// SERVICE REQUEST MODAL
+// ============================================================
+(function initServiceModal() {
+    const overlay = document.getElementById('serviceModal');
+    if (!overlay) return;
+
+    const form = document.getElementById('serviceRequestForm');
+    const successState = document.getElementById('serviceSuccessState');
+    const errorEl = document.getElementById('serviceFormError');
+    const submitBtn = document.getElementById('serviceSubmitBtn');
+    const serviceTypeInput = document.getElementById('serviceTypeInput');
+    const modalTitle = document.getElementById('serviceModalTitle');
+    const modalSubtitle = document.getElementById('serviceModalSubtitle');
+
+    // Open modal when any service button is clicked
+    document.querySelectorAll('[data-service]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const service = btn.dataset.service;
+            openServiceModal(service);
+        });
+    });
+
+    function openServiceModal(service) {
+        serviceTypeInput.value = service;
+        modalTitle.textContent = service;
+        modalSubtitle.textContent = 'Fill in your details and we\'ll confirm shortly';
+        form.style.display = 'block';
+        successState.style.display = 'none';
+        errorEl.style.display = 'none';
+        form.reset();
+        serviceTypeInput.value = service;
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        // Focus first input
+        setTimeout(() => document.getElementById('serviceGuestName')?.focus(), 100);
+    }
+
+    function closeModal() {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    // Close handlers
+    document.getElementById('serviceModalClose')?.addEventListener('click', closeModal);
+    document.getElementById('serviceModalCancel')?.addEventListener('click', closeModal);
+    document.getElementById('serviceSuccessClose')?.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.style.display !== 'none') closeModal(); });
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorEl.style.display = 'none';
+
+        const data = {
+            guestName: document.getElementById('serviceGuestName').value.trim(),
+            phone: document.getElementById('servicePhone').value.trim(),
+            apartmentName: document.getElementById('serviceApartment').value.trim(),
+            bookingReference: document.getElementById('serviceBookingRef').value.trim(),
+            serviceType: serviceTypeInput.value,
+            preferredDatetime: document.getElementById('serviceDateTime').value,
+            specialInstructions: document.getElementById('serviceInstructions').value.trim()
+        };
+
+        if (!data.guestName || !data.phone || !data.preferredDatetime) {
+            errorEl.textContent = 'Please fill in your name, phone number, and preferred date/time.';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader"></i> Submitting...';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        try {
+            const response = await window.lekkirStaysAPI.request('/services', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+
+            if (response.success) {
+                // Open admin WhatsApp
+                if (response.adminWhatsappLink) window.open(response.adminWhatsappLink, '_blank');
+                // Open guest WhatsApp after short delay
+                if (response.guestWhatsappLink) {
+                    setTimeout(() => window.open(response.guestWhatsappLink, '_blank'), 800);
+                }
+                // Show success
+                form.style.display = 'none';
+                document.getElementById('serviceSuccessType').textContent = data.serviceType;
+                successState.style.display = 'block';
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            } else {
+                throw new Error(response.error || 'Failed to submit request');
+            }
+        } catch (err) {
+            errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+            errorEl.style.display = 'block';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i data-lucide="send"></i> Submit Request';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+    });
+})();

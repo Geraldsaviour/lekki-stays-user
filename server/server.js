@@ -200,6 +200,7 @@ app.use((req, res, next) => {
 // API Routes - Now using Supabase!
 app.use('/api/apartments', require('./routes/apartments-supabase'));
 app.use('/api/bookings', require('./routes/bookings-supabase'));
+app.use('/api/services', require('./routes/service-requests'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/payments', require('./routes/payments'));
 

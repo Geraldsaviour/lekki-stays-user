@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | LuxStay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #F5F0E8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: #D4AF37; margin-bottom: 3rem; text-decoration: none; display: block; }
+        .error-code { font-family: 'Playfair Display', serif; font-size: clamp(6rem, 20vw, 12rem); font-weight: 900; color: #1a1a1a; line-height: 1; margin-bottom: 1rem; background: linear-gradient(135deg, #2a2a2a, #1a1a1a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .error-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; color: #F5F0E8; margin-bottom: 1rem; }
+        .error-subtitle { font-size: 1rem; color: #9CA3AF; max-width: 420px; line-height: 1.7; margin-bottom: 2.5rem; }
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .btn-primary { padding: 0.875rem 2rem; background: #D4AF37; color: #0a0a0a; border: none; border-radius: 30px; font-size: 0.9375rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); }
+        .btn-secondary { padding: 0.875rem 2rem; background: transparent; color: #9CA3AF; border: 1px solid #2a2a2a; border-radius: 30px; font-size: 0.9375rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.3s; }
+        .btn-secondary:hover { border-color: #D4AF37; color: #D4AF37; }
+        .divider { width: 60px; height: 2px; background: #D4AF37; margin: 2rem auto; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="logo">LuxStay</a>
+    <div class="error-code">404</div>
+    <div class="divider"></div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-subtitle">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+    <div class="btn-group">
+        <a href="index.html" class="btn-primary">Back to Home</a>
+        <a href="https://wa.me/2349039269846" class="btn-secondary">Contact Us on WhatsApp</a>
+    </div>
+</body>
+</html>

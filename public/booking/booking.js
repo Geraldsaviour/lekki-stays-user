@@ -424,9 +424,16 @@ async function handleSubmit() {
             console.log('✅ Booking created:', booking);
             console.log('💬 Opening WhatsApp and showing success page');
             
-            // Open WhatsApp with pre-filled message
+            // Open WhatsApp with pre-filled message for host
             if (response.whatsappLink) {
                 window.open(response.whatsappLink, '_blank');
+            }
+            
+            // Open guest acknowledgement WhatsApp (slight delay so both open)
+            if (response.guestWhatsappLink) {
+                setTimeout(() => {
+                    window.open(response.guestWhatsappLink, '_blank');
+                }, 800);
             }
             
             // Show success page with booking reference

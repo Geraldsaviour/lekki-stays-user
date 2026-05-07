@@ -39,6 +39,7 @@
                 <li><a href="#hero" class="nav-link">Home</a></li>
                 <li><a href="apartments/apartments.html" class="nav-link">Apartments</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="booking-status/booking-status.html" class="nav-link">My Booking</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-cta">
@@ -352,7 +353,7 @@
                             <li>Dietary restrictions accommodated</li>
                             <li>Full kitchen cleanup included</li>
                         </ul>
-                        <a href="#contact" class="service-btn">Request Chef</a>
+                        <button class="service-btn" data-service="Personal Chef Service">Request Chef</button>
                     </div>
                     
                     <div class="service-card">
@@ -371,7 +372,7 @@
                             <li>Flight tracking</li>
                             <li>Premium vehicles</li>
                         </ul>
-                        <a href="#contact" class="service-btn">Book Transfer</a>
+                        <button class="service-btn" data-service="Airport Transfer">Book Transfer</button>
                     </div>
                     
                     <div class="service-card">
@@ -390,7 +391,7 @@
                             <li>Eco-friendly products</li>
                             <li>Laundry service available</li>
                         </ul>
-                        <a href="#contact" class="service-btn">Schedule Cleaning</a>
+                        <button class="service-btn" data-service="Housekeeping">Schedule Cleaning</button>
                     </div>
                     
                     <div class="service-card">
@@ -409,13 +410,13 @@
                             <li>Premium local markets</li>
                             <li>Personal shopping service</li>
                         </ul>
-                        <a href="#contact" class="service-btn">Order Groceries</a>
+                        <button class="service-btn" data-service="Grocery Delivery">Order Groceries</button>
                     </div>
                     
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-icon">
-                                <i data-lucide="massage"></i>
+                                <i data-lucide="heart"></i>
                             </div>
                             <div class="service-info">
                                 <h4 class="service-title">Spa & Wellness</h4>
@@ -428,7 +429,7 @@
                             <li>Various massage types</li>
                             <li>Aromatherapy options</li>
                         </ul>
-                        <a href="#contact" class="service-btn">Book Spa</a>
+                        <button class="service-btn" data-service="Spa & Wellness">Book Spa</button>
                     </div>
                     
                     <div class="service-card">
@@ -447,7 +448,7 @@
                             <li>Meeting room booking</li>
                             <li>Courier services</li>
                         </ul>
-                        <a href="#contact" class="service-btn">Get Support</a>
+                        <button class="service-btn" data-service="Business Support">Get Support</button>
                     </div>
                 </div>
             </div>
@@ -633,6 +634,80 @@
             </div>
         </div>
     </footer>
+
+    <!-- Service Request Modal -->
+    <div id="serviceModal" class="service-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+        <div class="service-modal">
+            <div class="service-modal-header">
+                <div class="service-modal-icon">
+                    <i data-lucide="concierge-bell" id="serviceModalIcon"></i>
+                </div>
+                <div>
+                    <h2 id="serviceModalTitle">Request Service</h2>
+                    <p id="serviceModalSubtitle">Fill in your details and we'll confirm shortly</p>
+                </div>
+                <button class="service-modal-close" id="serviceModalClose" aria-label="Close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <form id="serviceRequestForm" class="service-modal-form" novalidate>
+                <input type="hidden" id="serviceTypeInput" name="serviceType">
+
+                <div class="service-form-row">
+                    <div class="service-form-group">
+                        <label for="serviceGuestName">Your Name *</label>
+                        <input type="text" id="serviceGuestName" name="guestName" placeholder="Full name" required>
+                    </div>
+                    <div class="service-form-group">
+                        <label for="servicePhone">Phone Number *</label>
+                        <input type="tel" id="servicePhone" name="phone" placeholder="08012345678" required>
+                    </div>
+                </div>
+
+                <div class="service-form-row">
+                    <div class="service-form-group">
+                        <label for="serviceApartment">Apartment Name</label>
+                        <input type="text" id="serviceApartment" name="apartmentName" placeholder="e.g. Haven Lekki — Studio">
+                    </div>
+                    <div class="service-form-group">
+                        <label for="serviceBookingRef">Booking Reference</label>
+                        <input type="text" id="serviceBookingRef" name="bookingReference" placeholder="e.g. BK-ABC123">
+                    </div>
+                </div>
+
+                <div class="service-form-group">
+                    <label for="serviceDateTime">Preferred Date & Time *</label>
+                    <input type="datetime-local" id="serviceDateTime" name="preferredDatetime" required>
+                </div>
+
+                <div class="service-form-group">
+                    <label for="serviceInstructions">Special Instructions <span style="color:#9CA3AF;font-weight:400">(optional)</span></label>
+                    <textarea id="serviceInstructions" name="specialInstructions" rows="3" placeholder="Any specific requirements or notes..."></textarea>
+                </div>
+
+                <div class="service-form-error" id="serviceFormError" style="display:none;"></div>
+
+                <div class="service-modal-actions">
+                    <button type="button" class="service-btn-cancel" id="serviceModalCancel">Cancel</button>
+                    <button type="submit" class="service-btn-submit" id="serviceSubmitBtn">
+                        <i data-lucide="send"></i>
+                        Submit Request
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success State -->
+            <div id="serviceSuccessState" style="display:none;" class="service-success">
+                <div class="service-success-icon">
+                    <i data-lucide="check-circle"></i>
+                </div>
+                <h3>Request Submitted!</h3>
+                <p>We've received your <strong id="serviceSuccessType"></strong> request. Our team will confirm via WhatsApp shortly.</p>
+                <button class="service-btn-submit" id="serviceSuccessClose">Done</button>
+            </div>
+        </div>
+    </div>
 
     <script src="shared/api-client.js"></script>
     <script src="script.js"></script>

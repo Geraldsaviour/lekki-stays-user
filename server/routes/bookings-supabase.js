@@ -189,6 +189,48 @@ const calculateNights = (checkIn, checkOut) => {
   return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 };
 
+// Format Nigerian phone to international format
+const formatNigerianPhone = (phone) => {
+  const clean = phone.replace(/\D/g, '');
+  if (clean.startsWith('0')) return '234' + clean.slice(1);
+  if (clean.startsWith('234')) return clean;
+  return '234' + clean;
+};
+
+// Generate guest booking acknowledgement message
+const generateGuestAcknowledgement = (booking, apartment) => {
+  const nights = calculateNights(booking.check_in, booking.check_out);
+  const checkIn = new Date(booking.check_in).toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+  const checkOut = new Date(booking.check_out).toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+
+  return `✅ *BOOKING REQUEST RECEIVED*
+
+Hi ${booking.guest_name}! 👋
+
+We've received your booking request for *${apartment.name}*.
+
+📋 *Your Booking Reference:*
+*${booking.booking_ref}*
+(Save this — you'll need it to check your booking status)
+
+📅 *Stay Details:*
+Check-in: ${checkIn}
+Check-out: ${checkOut}
+Nights: ${nights}
+Guests: ${booking.guests}
+
+💰 *Total Amount:*
+₦${booking.total_price.toLocaleString()}
+
+⏳ *What Happens Next:*
+Our team will review your request and confirm your booking within 2 hours. Once confirmed, we'll send you payment details via WhatsApp.
+
+📞 *Questions?*
+Reply to this message or contact us at ${process.env.HOST_WHATSAPP_NUMBER || 'our WhatsApp number'}.
+
+Thank you for choosing LuxStay! 🏡`;
+};
+
 // POST /api/bookings - Create new booking
 router.post('/', bookingRateLimit, sanitizeBookingInput, async (req, res) => {
   try {
@@ -294,22 +336,30 @@ router.post('/', bookingRateLimit, sanitizeBookingInput, async (req, res) => {
     
     console.log(`✅ Booking created successfully: ${booking.booking_ref}`);
     
-    // Generate WhatsApp notification link
+    // Generate WhatsApp notification link for host
     const whatsappLink = WhatsAppNotifier.generateHostNotification(
       {
         id: booking.booking_ref,
+        bookingRef: booking.booking_ref,
         guestName: booking.guest_name,
         guestPhone: booking.guest_phone,
         guestEmail: booking.guest_email,
         checkIn: booking.check_in,
         checkOut: booking.check_out,
+        guests: booking.guests,
         numGuests: booking.guests,
         totalPrice: booking.total_price,
-        token: booking.guest_token
+        token: booking.guest_token,
+        getNights: () => calculateNights(booking.check_in, booking.check_out)
       },
       apartment
     );
-    
+
+    // Generate guest acknowledgement WhatsApp link
+    const guestPhone = formatNigerianPhone(booking.guest_phone);
+    const guestAckMessage = generateGuestAcknowledgement(booking, apartment);
+    const guestWhatsappLink = `https://wa.me/${guestPhone}?text=${encodeURIComponent(guestAckMessage)}`;
+
     res.status(201).json({
       success: true,
       booking: {
@@ -324,6 +374,7 @@ router.post('/', bookingRateLimit, sanitizeBookingInput, async (req, res) => {
         createdAt: booking.created_at
       },
       whatsappLink,
+      guestWhatsappLink,
       message: 'Booking created successfully. Host will be notified via WhatsApp.'
     });
     
@@ -337,6 +388,56 @@ router.post('/', bookingRateLimit, sanitizeBookingInput, async (req, res) => {
       error: 'Failed to create booking',
       message: isDevelopment ? error.message : 'An internal error occurred. Please try again.'
     });
+  }
+});
+
+// GET /api/bookings/lookup - Look up booking by ref or phone
+router.get('/lookup', async (req, res) => {
+  try {
+    const { ref, phone } = req.query;
+
+    if (!ref && !phone) {
+      return res.status(400).json({ success: false, error: 'Provide booking reference or phone number' });
+    }
+
+    let query = supabase.from('bookings').select('*, apartments(name, location, images)');
+
+    if (ref) {
+      query = query.ilike('booking_ref', ref.trim());
+    } else {
+      const cleanPhone = phone.replace(/\D/g, '');
+      const variants = [cleanPhone, '0' + cleanPhone.slice(-10), '234' + cleanPhone.slice(-10), '+234' + cleanPhone.slice(-10)];
+      query = query.in('guest_phone', variants);
+    }
+
+    const { data: bookings, error } = await query.order('created_at', { ascending: false }).limit(5);
+
+    if (error) throw error;
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).json({ success: false, error: 'No booking found with that reference or phone number' });
+    }
+
+    const formatted = bookings.map(b => ({
+      bookingRef: b.booking_ref,
+      guestName: b.guest_name,
+      apartmentName: b.apartments?.name || 'Unknown',
+      apartmentLocation: b.apartments?.location || '',
+      apartmentImage: b.apartments?.images?.[0] || null,
+      checkIn: b.check_in,
+      checkOut: b.check_out,
+      guests: b.guests,
+      totalPrice: b.total_price,
+      status: b.status,
+      createdAt: b.created_at,
+      confirmedAt: b.confirmed_at,
+      paidAt: b.paid_at
+    }));
+
+    res.json({ success: true, bookings: formatted });
+  } catch (error) {
+    console.error('Lookup error:', error);
+    res.status(500).json({ success: false, error: 'Failed to look up booking' });
   }
 });
 
