@@ -57,6 +57,10 @@
       "dest": "/public/listings/$1"
     },
     {
+      "src": "/apartments/(.*)",
+      "dest": "/public/apartments/$1"
+    },
+    {
       "src": "/booking/(.*)",
       "dest": "/public/booking/$1"
     },

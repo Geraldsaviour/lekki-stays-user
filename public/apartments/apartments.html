@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Apartments | LuxStay</title>
+    <link rel="stylesheet" href="apartments.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-text">LuxStay</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+                <li><a href="apartments.html" class="nav-link active">Apartments</a></li>
+                <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <button class="book-now-btn" onclick="window.location.href='../index.html#contact'">Book Now</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Our Collection</p>
+            <h1 class="hero-title">All Apartments</h1>
+            <p class="hero-subtitle">Explore our full range of luxury shortlet apartments across Lagos and Abuja</p>
+        </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" id="filterBar">
+        <div class="filter-container">
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">
+                    <i data-lucide="grid-3x3"></i>
+                    All
+                </button>
+                <button class="filter-btn" data-filter="available">
+                    <i data-lucide="check-circle"></i>
+                    Available
+                </button>
+                <button class="filter-btn" data-filter="on_hold">
+                    <i data-lucide="pause-circle"></i>
+                    Coming Soon
+                </button>
+            </div>
+            <div class="filter-right">
+                <div class="search-box">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by name or location...">
+                </div>
+                <select id="sortSelect" class="sort-select">
+                    <option value="default">Sort by</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="guests">Most Guests</option>
+                    <option value="bedrooms">Most Bedrooms</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apartments Grid -->
+    <main class="apartments-main">
+        <div class="apartments-container">
+            <div class="results-summary" id="resultsSummary">
+                <span id="resultsCount">Loading...</span>
+            </div>
+            <div class="apartments-grid" id="apartmentsGrid">
+                <!-- Loading state -->
+                <div class="loading-state" id="loadingState">
+                    <div class="loading-spinner"></div>
+                    <p>Loading apartments...</p>
+                </div>
+            </div>
+            <!-- Empty state -->
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <i data-lucide="home"></i>
+                <h3>No apartments found</h3>
+                <p>Try adjusting your search or filter</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="logo-text footer-logo">LuxStay</h3>
+                    <p class="footer-tagline">Experience Luxury Living</p>
+                    <p class="footer-description">Nigeria's premier shortlet apartment service, offering luxury accommodations in prime locations across Lagos and Abuja.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2349039269846" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#hero">Home</a></li>
+                        <li><a href="apartments.html">All Apartments</a></li>
+                        <li><a href="../index.html#services">Services</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Locations</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Lekki, Lagos</a></li>
+                        <li><a href="#">Victoria Island, Lagos</a></li>
+                        <li><a href="#">Ikoyi, Lagos</a></li>
+                        <li><a href="#">Abuja, FCT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact</h4>
+                    <div class="footer-contact">
+                        <div class="contact-item"><i class="fas fa-phone"></i><p>+234 903 926 9846</p></div>
+                        <div class="contact-item"><i class="fas fa-envelope"></i><p>info@luxstay.ng</p></div>
+                        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><p>Victoria Island, Lagos</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LuxStay. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/api-client.js"></script>
+    <script src="apartments.js"></script>
+</body>
+</html>

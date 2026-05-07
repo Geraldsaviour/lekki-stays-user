@@ -17,8 +17,9 @@ const transformApartment = (apt) => {
     amenities: apt.amenities,
     images: apt.images,
     active: apt.active,
+    onHold: apt.on_hold,
+    holdReason: apt.hold_reason || null,
     createdAt: apt.created_at,
-    // Add totalPrice if it exists
     ...(apt.totalPrice && { totalPrice: apt.totalPrice })
   };
 };
@@ -147,13 +148,17 @@ router.post('/availability', async (req, res) => {
 // GET /api/apartments - List all available properties
 router.get('/', async (req, res) => {
   try {
-    const { limit, checkin, checkout, guests } = req.query;
+    const { limit, checkin, checkout, guests, all } = req.query;
     
     let query = supabase
       .from('apartments')
       .select('*')
-      .eq('active', true)
-      .eq('on_hold', false);
+      .eq('active', true);
+
+    // If 'all=true' is passed, include on-hold apartments too
+    if (all !== 'true') {
+      query = query.eq('on_hold', false);
+    }
     
     // Apply guest filter
     if (guests) {
