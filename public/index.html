@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LuxStay - Premium Shortlet Apartments</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -13,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
+
 <body>
     <!-- Preloader -->
     <div class="preloader" id="preloader">
@@ -63,7 +67,7 @@
             <div class="hero-text">
                 <h1 class="hero-title">Experience Luxury Living</h1>
                 <p class="hero-subtitle">
-                    Premium shortlet apartments designed for the discerning traveler. 
+                    Premium shortlet apartments designed for the discerning traveler.
                     Where comfort meets elegance in the heart of the city.
                 </p>
                 <div class="hero-buttons">
@@ -84,7 +88,9 @@
     <section class="booking-search-section" id="apartments">
         <div class="booking-section-header">
             <h2 class="booking-section-title">Find Available <span class="gold-text">Apartments</span></h2>
-            <p class="booking-section-description">Discover your perfect luxury accommodation with our advanced search filters. Select your preferred location, dates, and guest requirements to find the ideal apartment for your stay.</p>
+            <p class="booking-section-description">Discover your perfect luxury accommodation with our advanced search
+                filters. Select your preferred location, dates, and guest requirements to find the ideal apartment for
+                your stay.</p>
         </div>
         <div class="booking-search-container">
             <div class="booking-search-bar" id="bookingSearchBar">
@@ -95,12 +101,13 @@
                     <div class="field-content">
                         <label class="field-label">Location</label>
                         <div class="field-value" id="locationValue">Where are you going?</div>
-                        <input type="text" class="field-input" placeholder="Search locations..." id="locationInput" style="display: none;">
+                        <input type="text" class="field-input" placeholder="Search locations..." id="locationInput"
+                            style="display: none;">
                     </div>
                 </div>
-                
+
                 <div class="field-divider"></div>
-                
+
                 <div class="search-field" id="checkinField">
                     <div class="field-icon">
                         <i data-lucide="calendar"></i>
@@ -110,9 +117,9 @@
                         <div class="field-value" id="checkinValue">Add dates</div>
                     </div>
                 </div>
-                
+
                 <div class="field-divider"></div>
-                
+
                 <div class="search-field" id="checkoutField">
                     <div class="field-icon">
                         <i data-lucide="calendar"></i>
@@ -122,9 +129,9 @@
                         <div class="field-value" id="checkoutValue">Add dates</div>
                     </div>
                 </div>
-                
+
                 <div class="field-divider"></div>
-                
+
                 <div class="search-field" id="guestsField">
                     <div class="field-icon">
                         <i data-lucide="users"></i>
@@ -134,26 +141,27 @@
                         <div class="field-value" id="guestsValue">1 guest</div>
                     </div>
                 </div>
-                
+
                 <button class="search-button" id="searchButton">
                     <i data-lucide="search"></i>
                     <span>Search</span>
                 </button>
             </div>
         </div>
-        
+
         <!-- Dropdowns Container - Now part of the section flow -->
         <div class="dropdowns-container">
             <!-- Location Dropdown -->
             <div class="location-dropdown" id="locationDropdown">
                 <div class="location-search">
-                    <input type="text" class="location-search-input" placeholder="Search locations..." id="locationSearchInput">
+                    <input type="text" class="location-search-input" placeholder="Search locations..."
+                        id="locationSearchInput">
                 </div>
                 <div class="location-list" id="locationList">
                     <!-- Popular locations will be populated by JavaScript -->
                 </div>
             </div>
-            
+
             <!-- Calendar Dropdown -->
             <div class="calendar-dropdown" id="calendarDropdown">
                 <div class="calendar-info-note">
@@ -172,12 +180,12 @@
                         <i data-lucide="chevron-right"></i>
                     </button>
                 </div>
-                
+
                 <div class="calendar-grids">
                     <div class="calendar-grid" id="currentMonthGrid"></div>
                     <div class="calendar-grid" id="nextMonthGrid"></div>
                 </div>
-                
+
                 <div class="calendar-footer">
                     <div class="selected-dates" id="selectedDates">
                         <span id="checkinDisplay"></span>
@@ -186,7 +194,7 @@
                     <button class="clear-dates-btn" id="clearDatesBtn">Clear dates</button>
                 </div>
             </div>
-            
+
             <!-- Guests Dropdown -->
             <div class="guests-dropdown" id="guestsDropdown">
                 <div class="guests-header">
@@ -195,7 +203,7 @@
                         <i data-lucide="x"></i>
                     </button>
                 </div>
-                
+
                 <div class="guests-option">
                     <div class="guests-info">
                         <div class="guests-title">Adults</div>
@@ -207,7 +215,7 @@
                         <button class="guests-btn" id="adultsIncrease">+</button>
                     </div>
                 </div>
-                
+
                 <div class="guests-option">
                     <div class="guests-info">
                         <div class="guests-title">Children</div>
@@ -219,7 +227,7 @@
                         <button class="guests-btn" id="childrenIncrease">+</button>
                     </div>
                 </div>
-                
+
                 <div class="guests-option">
                     <div class="guests-info">
                         <div class="guests-title">Infants</div>
@@ -252,6 +260,12 @@
                     <i data-lucide="chevron-right"></i>
                 </button>
             </div>
+            <div class="listings-cta">
+                <a href="apartments/apartments.html" class="see-all-btn">
+                    <span>See All Apartments</span>
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -260,9 +274,10 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Premium <span class="gold-text">Amenities</span> & Services</h2>
-                <p class="section-description">Experience luxury living with our world-class amenities and personalized on-demand services designed to exceed your expectations.</p>
+                <p class="section-description">Experience luxury living with our world-class amenities and personalized
+                    on-demand services designed to exceed your expectations.</p>
             </div>
-            
+
             <!-- Amenities Grid -->
             <div class="amenities-container">
                 <h3 class="subsection-title">Property Amenities</h3>
@@ -272,67 +287,75 @@
                             <i data-lucide="waves"></i>
                         </div>
                         <h4 class="amenity-title">Swimming Pool</h4>
-                        <p class="amenity-description">Refreshing infinity pools with stunning city views and poolside lounging areas.</p>
+                        <p class="amenity-description">Refreshing infinity pools with stunning city views and poolside
+                            lounging areas.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="dumbbell"></i>
                         </div>
                         <h4 class="amenity-title">Fitness Center</h4>
-                        <p class="amenity-description">State-of-the-art gym equipment and dedicated workout spaces available 24/7.</p>
+                        <p class="amenity-description">State-of-the-art gym equipment and dedicated workout spaces
+                            available 24/7.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="utensils"></i>
                         </div>
                         <h4 class="amenity-title">Gourmet Kitchen</h4>
-                        <p class="amenity-description">Fully equipped modern kitchens with premium appliances and cookware.</p>
+                        <p class="amenity-description">Fully equipped modern kitchens with premium appliances and
+                            cookware.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="wifi"></i>
                         </div>
                         <h4 class="amenity-title">High-Speed WiFi</h4>
-                        <p class="amenity-description">Complimentary fiber-optic internet with speeds up to 1GB for work and entertainment.</p>
+                        <p class="amenity-description">Complimentary fiber-optic internet with speeds up to 1GB for work
+                            and entertainment.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="wind"></i>
                         </div>
                         <h4 class="amenity-title">Climate Control</h4>
-                        <p class="amenity-description">Individual air conditioning and heating systems for optimal comfort year-round.</p>
+                        <p class="amenity-description">Individual air conditioning and heating systems for optimal
+                            comfort year-round.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="tv"></i>
                         </div>
                         <h4 class="amenity-title">Smart Entertainment</h4>
-                        <p class="amenity-description">65" Smart TVs with Netflix, streaming services, and premium cable channels.</p>
+                        <p class="amenity-description">65" Smart TVs with Netflix, streaming services, and premium cable
+                            channels.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="car"></i>
                         </div>
                         <h4 class="amenity-title">Secure Parking</h4>
-                        <p class="amenity-description">Covered parking spaces with 24/7 security and electric vehicle charging stations.</p>
+                        <p class="amenity-description">Covered parking spaces with 24/7 security and electric vehicle
+                            charging stations.</p>
                     </div>
-                    
+
                     <div class="amenity-card">
                         <div class="amenity-icon">
                             <i data-lucide="shield-check"></i>
                         </div>
                         <h4 class="amenity-title">24/7 Security</h4>
-                        <p class="amenity-description">Round-the-clock security personnel, CCTV monitoring, and secure access systems.</p>
+                        <p class="amenity-description">Round-the-clock security personnel, CCTV monitoring, and secure
+                            access systems.</p>
                     </div>
                 </div>
             </div>
-            
+
             <!-- On-Demand Services -->
             <div class="services-container">
                 <h3 class="subsection-title">On-Demand Services</h3>
@@ -347,7 +370,8 @@
                                 <span class="service-price">From ₦25,000/meal</span>
                             </div>
                         </div>
-                        <p class="service-description">Professional chefs prepare gourmet meals in your apartment using fresh, local ingredients.</p>
+                        <p class="service-description">Professional chefs prepare gourmet meals in your apartment using
+                            fresh, local ingredients.</p>
                         <ul class="service-features">
                             <li>Custom menu planning</li>
                             <li>Dietary restrictions accommodated</li>
@@ -355,7 +379,7 @@
                         </ul>
                         <button class="service-btn" data-service="Personal Chef Service">Request Chef</button>
                     </div>
-                    
+
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-icon">
@@ -366,7 +390,8 @@
                                 <span class="service-price">From ₦15,000</span>
                             </div>
                         </div>
-                        <p class="service-description">Luxury vehicle transfers to and from Lagos and Abuja airports with professional drivers.</p>
+                        <p class="service-description">Luxury vehicle transfers to and from Lagos and Abuja airports
+                            with professional drivers.</p>
                         <ul class="service-features">
                             <li>Meet & greet service</li>
                             <li>Flight tracking</li>
@@ -374,7 +399,7 @@
                         </ul>
                         <button class="service-btn" data-service="Airport Transfer">Book Transfer</button>
                     </div>
-                    
+
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-icon">
@@ -385,7 +410,8 @@
                                 <span class="service-price">From ₦8,000/visit</span>
                             </div>
                         </div>
-                        <p class="service-description">Professional cleaning services to keep your apartment spotless during your stay.</p>
+                        <p class="service-description">Professional cleaning services to keep your apartment spotless
+                            during your stay.</p>
                         <ul class="service-features">
                             <li>Daily or weekly service</li>
                             <li>Eco-friendly products</li>
@@ -393,7 +419,7 @@
                         </ul>
                         <button class="service-btn" data-service="Housekeeping">Schedule Cleaning</button>
                     </div>
-                    
+
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-icon">
@@ -404,7 +430,8 @@
                                 <span class="service-price">From ₦5,000 delivery</span>
                             </div>
                         </div>
-                        <p class="service-description">Fresh groceries and essentials delivered directly to your apartment door.</p>
+                        <p class="service-description">Fresh groceries and essentials delivered directly to your
+                            apartment door.</p>
                         <ul class="service-features">
                             <li>Same-day delivery</li>
                             <li>Premium local markets</li>
@@ -412,7 +439,7 @@
                         </ul>
                         <button class="service-btn" data-service="Grocery Delivery">Order Groceries</button>
                     </div>
-                    
+
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-icon">
@@ -423,7 +450,8 @@
                                 <span class="service-price">From ₦20,000/session</span>
                             </div>
                         </div>
-                        <p class="service-description">In-apartment massage therapy and wellness treatments for ultimate relaxation.</p>
+                        <p class="service-description">In-apartment massage therapy and wellness treatments for ultimate
+                            relaxation.</p>
                         <ul class="service-features">
                             <li>Licensed therapists</li>
                             <li>Various massage types</li>
@@ -431,7 +459,7 @@
                         </ul>
                         <button class="service-btn" data-service="Spa & Wellness">Book Spa</button>
                     </div>
-                    
+
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-icon">
@@ -442,7 +470,8 @@
                                 <span class="service-price">From ₦10,000/hour</span>
                             </div>
                         </div>
-                        <p class="service-description">Professional business services including printing, courier, and meeting room access.</p>
+                        <p class="service-description">Professional business services including printing, courier, and
+                            meeting room access.</p>
                         <ul class="service-features">
                             <li>Document services</li>
                             <li>Meeting room booking</li>
@@ -452,12 +481,13 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Service Request CTA -->
             <div class="service-cta">
                 <div class="cta-content">
                     <h3>Need Something Special?</h3>
-                    <p>Our concierge team is available 24/7 to arrange any additional services or experiences you desire.</p>
+                    <p>Our concierge team is available 24/7 to arrange any additional services or experiences you
+                        desire.</p>
                     <div class="cta-buttons">
                         <a href="#contact" class="cta-btn primary" id="contactConcierge">Contact Concierge</a>
                         <a href="#services" class="cta-btn secondary" id="viewAllServices">View All Services</a>
@@ -472,7 +502,8 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Get In <span class="gold-text">Touch</span></h2>
-                <p class="section-description">Ready to experience luxury living? Contact us today to book your perfect stay.</p>
+                <p class="section-description">Ready to experience luxury living? Contact us today to book your perfect
+                    stay.</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
@@ -548,7 +579,7 @@
                         <p class="footer-tagline">Experience Luxury Living</p>
                     </div>
                     <p class="footer-description">
-                        Nigeria's premier shortlet apartment service, offering luxury accommodations 
+                        Nigeria's premier shortlet apartment service, offering luxury accommodations
                         in prime locations across Lagos and Abuja.
                     </p>
                     <div class="footer-social">
@@ -636,7 +667,8 @@
     </footer>
 
     <!-- Service Request Modal -->
-    <div id="serviceModal" class="service-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+    <div id="serviceModal" class="service-modal-overlay" style="display:none;" role="dialog" aria-modal="true"
+        aria-labelledby="serviceModalTitle">
         <div class="service-modal">
             <div class="service-modal-header">
                 <div class="service-modal-icon">
@@ -668,7 +700,8 @@
                 <div class="service-form-row">
                     <div class="service-form-group">
                         <label for="serviceApartment">Apartment Name</label>
-                        <input type="text" id="serviceApartment" name="apartmentName" placeholder="e.g. Haven Lekki — Studio">
+                        <input type="text" id="serviceApartment" name="apartmentName"
+                            placeholder="e.g. Haven Lekki — Studio">
                     </div>
                     <div class="service-form-group">
                         <label for="serviceBookingRef">Booking Reference</label>
@@ -682,8 +715,10 @@
                 </div>
 
                 <div class="service-form-group">
-                    <label for="serviceInstructions">Special Instructions <span style="color:#9CA3AF;font-weight:400">(optional)</span></label>
-                    <textarea id="serviceInstructions" name="specialInstructions" rows="3" placeholder="Any specific requirements or notes..."></textarea>
+                    <label for="serviceInstructions">Special Instructions <span
+                            style="color:#9CA3AF;font-weight:400">(optional)</span></label>
+                    <textarea id="serviceInstructions" name="specialInstructions" rows="3"
+                        placeholder="Any specific requirements or notes..."></textarea>
                 </div>
 
                 <div class="service-form-error" id="serviceFormError" style="display:none;"></div>
@@ -703,7 +738,8 @@
                     <i data-lucide="check-circle"></i>
                 </div>
                 <h3>Request Submitted!</h3>
-                <p>We've received your <strong id="serviceSuccessType"></strong> request. Our team will confirm via WhatsApp shortly.</p>
+                <p>We've received your <strong id="serviceSuccessType"></strong> request. Our team will confirm via
+                    WhatsApp shortly.</p>
                 <button class="service-btn-submit" id="serviceSuccessClose">Done</button>
             </div>
         </div>
@@ -713,18 +749,19 @@
     <script src="script.js"></script>
     <script>
         // Initialize Lucide icons after all content is loaded
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
         });
-        
+
         // Also initialize icons after page load to catch any dynamically added content
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
         });
     </script>
 </body>
+
 </html>

@@ -1274,6 +1274,40 @@ body {
     right: -24px;
 }
 
+.listings-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.see-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 100%);
+    color: #000000;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.see-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, #F4E4BC 0%, #D4AF37 100%);
+}
+
+.see-all-btn i {
+    width: 20px;
+    height: 20px;
+}
+
 .listings-grid {
     display: flex;
     overflow-x: auto;
