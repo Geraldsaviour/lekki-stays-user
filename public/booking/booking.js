@@ -422,19 +422,6 @@ async function handleSubmit() {
             const booking = response.booking;
             
             console.log('✅ Booking created:', booking);
-            console.log('💬 Opening WhatsApp and showing success page');
-            
-            // Open WhatsApp with pre-filled message for host
-            if (response.whatsappLink) {
-                window.open(response.whatsappLink, '_blank');
-            }
-            
-            // Open guest acknowledgement WhatsApp (slight delay so both open)
-            if (response.guestWhatsappLink) {
-                setTimeout(() => {
-                    window.open(response.guestWhatsappLink, '_blank');
-                }, 800);
-            }
             
             // Show success page with booking reference
             showSuccessState(formData, booking);
@@ -453,9 +440,6 @@ async function handleSubmit() {
     } catch (error) {
         console.error('Booking failed:', error);
         alert(`Booking failed: ${error.message}. Please try again or contact us directly.`);
-        
-        // Fallback to WhatsApp
-        openWhatsApp(formData);
     } finally {
         // Reset button
         submitBtn.textContent = originalText;
