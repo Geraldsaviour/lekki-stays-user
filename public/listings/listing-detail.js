@@ -924,6 +924,53 @@ function formatDateFull(date) {
 // ===== REVIEW FORM HANDLING =====
 let currentRating = 5;
 
+function showReviewError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'review-error-message';
+    errorDiv.style.cssText = `
+        background: #ef4444;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: slideDown 0.3s ease;
+    `;
+    errorDiv.innerHTML = `
+        <i data-lucide="alert-circle"></i>
+        <span>${message}</span>
+    `;
+    
+    const formContainer = document.getElementById('reviewFormContainer');
+    if (formContainer) {
+        formContainer.insertBefore(errorDiv, formContainer.firstChild);
+        
+        // Close button
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '<i data-lucide="x"></i>';
+        closeBtn.style.cssText = `
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.25rem;
+            margin-left: auto;
+        `;
+        closeBtn.addEventListener('click', () => {
+            errorDiv.remove();
+        });
+        errorDiv.appendChild(closeBtn);
+        
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    }
+}
+
 function initializeReviewForm() {
     const ratingDisplay = document.getElementById('ratingDisplay');
     const ratingInput = document.getElementById('reviewRating');
@@ -975,14 +1022,14 @@ function initializeReviewForm() {
         const rating = currentRating;
         
         if (!name || !comment || !rating) {
-            alert('Please fill in all fields');
+            showReviewError('Please fill in all fields');
             return;
         }
         
         // Get apartment ID from data attribute
         const apartmentId = document.body.getAttribute('data-listing-id');
         if (!apartmentId) {
-            console.error('Apartment ID not found');
+            showReviewError('Apartment ID not found');
             return;
         }
         
@@ -1005,11 +1052,11 @@ function initializeReviewForm() {
                 // Reinitialize icons
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             } else {
-                alert('Failed to submit review. Please try again.');
+                showReviewError(response.error || 'Failed to submit review. Please try again.');
             }
         } catch (error) {
             console.error('Error submitting review:', error);
-            alert('Failed to submit review. Please try again.');
+            showReviewError('Failed to submit review. Please try again.');
         }
     });
     
