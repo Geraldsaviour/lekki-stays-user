@@ -427,6 +427,7 @@ async function handleSubmit() {
             showSuccessState(formData, booking);
         } else {
             // Handle specific error cases with user-friendly messages
+            console.error('Booking API returned error:', response.error, response.message);
             if (response.error === 'Apartment not available' || response.message?.includes('already booked')) {
                 showBookingUnavailableError();
             } else if (response.error === 'Guest capacity exceeded') {
