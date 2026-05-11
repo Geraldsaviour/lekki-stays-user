@@ -220,6 +220,25 @@ class LekkirStaysAPI {
         });
     }
 
+    // ===== REVIEWS API =====
+
+    /**
+     * Get reviews for an apartment
+     */
+    async getReviews(apartmentId) {
+        return this.request(`/apartments/${apartmentId}/reviews`);
+    }
+
+    /**
+     * Submit a review for an apartment
+     */
+    async submitReview(apartmentId, reviewData) {
+        return this.request(`/apartments/${apartmentId}/reviews`, {
+            method: 'POST',
+            body: JSON.stringify(reviewData)
+        });
+    }
+
     // ===== UTILITY METHODS =====
 
     /**

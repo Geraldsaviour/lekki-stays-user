@@ -143,6 +143,53 @@
         <div id="addressDisplay" class="address-display"></div>
     </section>
 
+    <!-- Add Review Section -->
+    <section class="add-review-section">
+        <div class="container">
+            <h2 class="section-heading">Leave a Review</h2>
+            <div id="reviewFormContainer" class="review-form-container">
+                <form id="reviewForm" class="review-form">
+                    <div class="form-group">
+                        <label for="reviewRating">Rating *</label>
+                        <div class="rating-input">
+                            <span class="star-rating" id="ratingDisplay">☆☆☆☆☆</span>
+                            <input type="hidden" id="reviewRating" value="5" required>
+                        </div>
+                        <div class="rating-stars">
+                            <button type="button" class="star-btn" data-value="1">★</button>
+                            <button type="button" class="star-btn" data-value="2">★</button>
+                            <button type="button" class="star-btn" data-value="3">★</button>
+                            <button type="button" class="star-btn" data-value="4">★</button>
+                            <button type="button" class="star-btn" data-value="5">★</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewComment">Your Review *</label>
+                        <textarea id="reviewComment" rows="5" placeholder="Share your experience staying at this apartment..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewName">Your Name *</label>
+                        <input type="text" id="reviewName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="submit-review-btn">
+                            <i data-lucide="send"></i>
+                            Submit Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div id="reviewSuccessMessage" class="review-success-message" style="display: none;">
+                <div class="success-icon">
+                    <i data-lucide="check-circle"></i>
+                </div>
+                <h3>Thank you for your review!</h3>
+                <p>Your review has been submitted and will be published after approval.</p>
+                <button id="closeReviewSuccessBtn" class="close-success-btn">Close</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Reviews Section -->
     <section class="reviews-section">
         <div class="reviews-header">

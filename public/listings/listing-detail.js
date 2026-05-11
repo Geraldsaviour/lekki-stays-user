@@ -119,6 +119,10 @@ async function initializeDetailPage() {
         initializeImageGallery();
         initializeBookingPanel();
         initializeMobileMenu();
+        initializeReviewForm();
+        
+        // Load reviews
+        loadReviews(apartmentId);
         
     } catch (error) {
         console.error('Error loading apartment:', error);
@@ -915,6 +919,149 @@ function formatDateFull(date) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June',
                    'July', 'August', 'September', 'October', 'November', 'December'];
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
+
+// ===== REVIEW FORM HANDLING =====
+let currentRating = 5;
+
+function initializeReviewForm() {
+    const ratingDisplay = document.getElementById('ratingDisplay');
+    const ratingInput = document.getElementById('reviewRating');
+    const starBtns = document.querySelectorAll('.star-btn');
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewSuccessMessage = document.getElementById('reviewSuccessMessage');
+    const closeSuccessBtn = document.getElementById('closeReviewSuccessBtn');
+    
+    if (!ratingDisplay || !ratingInput || !starBtns.length || !reviewForm) return;
+    
+    // Star rating interaction
+    starBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const value = parseInt(btn.dataset.value);
+            currentRating = value;
+            
+            // Update display
+            ratingDisplay.textContent = '★'.repeat(value) + '☆'.repeat(5 - value);
+            ratingInput.value = value;
+            
+            // Update active state on buttons
+            starBtns.forEach((b, index) => {
+                if (index < value) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
+        });
+        
+        // Hover effects
+        btn.addEventListener('mouseenter', () => {
+            const value = parseInt(btn.dataset.value);
+            ratingDisplay.textContent = '★'.repeat(value) + '☆'.repeat(5 - value);
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            ratingDisplay.textContent = '★'.repeat(currentRating) + '☆'.repeat(5 - currentRating);
+        });
+    });
+    
+    // Form submission
+    reviewForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('reviewName').value.trim();
+        const comment = document.getElementById('reviewComment').value.trim();
+        const rating = currentRating;
+        
+        if (!name || !comment || !rating) {
+            alert('Please fill in all fields');
+            return;
+        }
+        
+        // Get apartment ID from data attribute
+        const apartmentId = document.body.getAttribute('data-listing-id');
+        if (!apartmentId) {
+            console.error('Apartment ID not found');
+            return;
+        }
+        
+        try {
+            // Submit review
+            const response = await window.lekkirStaysAPI.submitReview(apartmentId, {
+                name,
+                comment,
+                rating
+            });
+            
+            if (response.success) {
+                // Show success message
+                reviewForm.style.display = 'none';
+                reviewSuccessMessage.style.display = 'block';
+                
+                // Reload reviews
+                await loadReviews(apartmentId);
+                
+                // Reinitialize icons
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            } else {
+                alert('Failed to submit review. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting review:', error);
+            alert('Failed to submit review. Please try again.');
+        }
+    });
+    
+    // Close success message
+    if (closeSuccessBtn) {
+        closeSuccessBtn.addEventListener('click', () => {
+            reviewSuccessMessage.style.display = 'none';
+        });
+    }
+}
+
+// Load reviews for the apartment
+async function loadReviews(apartmentId) {
+    try {
+        const response = await window.lekkirStaysAPI.getReviews(apartmentId);
+        
+        if (response.success && response.reviews) {
+            // Update the reviews section
+            const reviewsGrid = document.getElementById('reviewsGrid');
+            const averageRating = document.getElementById('averageRating');
+            
+            if (response.reviews.length > 0) {
+                const avgRating = response.averageRating || 
+                                 (response.reviews.reduce((sum, review) => sum + review.rating, 0) / response.reviews.length).toFixed(1);
+                
+                averageRating.innerHTML = `<span class="star-rating">★</span> ${avgRating} (${response.reviews.length} reviews)`;
+                
+                reviewsGrid.innerHTML = response.reviews.map(review => `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-name">${review.name || 'Anonymous'}</div>
+                                <div class="review-date">${new Date(review.created_at || review.date).toLocaleDateString('en-US', { 
+                                    year: 'numeric', 
+                                    month: 'long' 
+                                })}</div>
+                            </div>
+                            <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                        </div>
+                        <div class="review-comment">${review.comment}</div>
+                    </div>
+                `).join('');
+            } else {
+                averageRating.innerHTML = '';
+                reviewsGrid.innerHTML = '<div class="no-reviews">No reviews yet. Be the first to stay!</div>';
+            }
+            
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+    } catch (error) {
+        console.error('Error loading reviews:', error);
+    }
 }
 
 // ===== SMOOTH SCROLLING =====
